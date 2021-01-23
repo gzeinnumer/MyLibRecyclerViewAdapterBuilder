@@ -144,7 +144,7 @@ new BuildAdapter<MyModel>(R.layout.rv_item)
 BuildAdapter<MyModel>(R.layout.rv_item)
     .setCustomNoItem(R.layout.custom_empty_item)
 ```
-
+#
 - You can customize animation in recycler view with
 > Java
 ```java
