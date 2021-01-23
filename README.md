@@ -77,7 +77,7 @@ new CountDownTimer(5000, 1000) {
     }
 
     public void onFinish() {
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 100; i++) {
             list.add(new MyModel(i,"Data Ke "+ (i + 1)));
         }
         adapter.setList(list);
@@ -108,7 +108,9 @@ binding.rv.adapter = adapter
 object : CountDownTimer(5000, 1000) {
     override fun onTick(millisUntilFinished: Long) {}
     override fun onFinish() {
-
+        for (i in 0..100) {
+            list.add(MyModel(i, "Data Ke " + (i + 1)))
+        }
         adapter.setList(list)
     }
 }.start()
@@ -131,7 +133,7 @@ Full Code
 
 ## Customize
 
-You can customize Empty item Message or `list` size = 0 with
+- You can customize Empty item Message or `list` size = 0 with
 > Java
 ```java
 new BuildAdapter<MyModel>(R.layout.rv_item)
@@ -143,7 +145,7 @@ BuildAdapter<MyModel>(R.layout.rv_item)
     .setCustomNoItem(R.layout.custom_empty_item)
 ```
 
-You can customize animation in recycler view with
+- You can customize animation in recycler view with
 > Java
 ```java
 new BuildAdapter<MyModel>(R.layout.rv_item)
