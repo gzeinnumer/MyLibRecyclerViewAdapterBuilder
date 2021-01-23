@@ -7,6 +7,7 @@ import android.view.ViewStub;
 import android.view.animation.AnimationUtils;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.gzeinnumer.mylibrecyclerviewadapterbuilder.databinding.ItemRvBinding;
@@ -40,10 +41,10 @@ public class AdapterCreator<T> extends RecyclerView.Adapter<RecyclerView.ViewHol
         this.bindViewHolder = bindViewHolder;
     }
 
-    public void setList(List<T> list) {
-        this.list = list;
-        notifyDataSetChanged();
-    }
+//    public void setList(List<T> list) {
+//        this.list = list;
+//        notifyDataSetChanged();
+//    }
 
     private static final int TYPE_NORMAL = 1;
     private static final int TYPE_EMPTY = 0;
@@ -97,5 +98,13 @@ public class AdapterCreator<T> extends RecyclerView.Adapter<RecyclerView.ViewHol
         return list.size() > 0 ? list.size() : 1;
     }
 
+    public void setList(List<T> d){
+        MyDiffUtilsCallBack<T> diffUtilsCallBack = new MyDiffUtilsCallBack<T>(list, d);
+        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffUtilsCallBack);
+
+        list.clear();
+        list.addAll(d);
+        diffResult.dispatchUpdatesTo(this);
+    }
 
 }

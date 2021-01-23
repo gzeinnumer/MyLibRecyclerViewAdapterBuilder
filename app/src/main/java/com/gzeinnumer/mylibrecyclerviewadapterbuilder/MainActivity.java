@@ -58,8 +58,10 @@ public class MainActivity extends AppCompatActivity {
             }
 
             public void onFinish() {
-
-//                adapter.setList(list);
+                for (int i = 0; i < 10; i++) {
+                    list.add(new MyModel(i,"Data Ke "+ (i + 1)));
+                }
+                adapter.setList(list);
             }
         }.start();
     }
