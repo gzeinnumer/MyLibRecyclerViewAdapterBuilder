@@ -125,7 +125,7 @@ Full Code
  & [activity_main.xml](https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilder/blob/master/app/src/main/res/layout/activity_main.xml)
  & [rv_item.xml](https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilder/blob/master/app/src/main/res/layout/rv_item.xml)
 
-|![](https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilder/blob/master/preview/example1.jpg)|![](https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilder/blob/master/preview/example2.jpg)|
+|<img src="https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilder/blob/master/preview/example1.jpg" width="400"/>|<img src="https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilder/blob/master/preview/example2.jpg" width="400"/>|
 |---|---|
 |If `list` size = 0| Your Custom Item View |
 
@@ -144,7 +144,11 @@ new BuildAdapter<MyModel>(R.layout.rv_item)
 BuildAdapter<MyModel>(R.layout.rv_item)
     .setCustomNoItem(R.layout.custom_empty_item)
 ```
-Sample code [custom_empty_item.xml](https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilder/blob/master/app/src/main/res/layout/custom_empty_item.xml) & [Preview](https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilder/blob/master/preview/example3.jpg)
+Sample code [custom_empty_item.xml](https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilder/blob/master/app/src/main/res/layout/custom_empty_item.xml)
+<p align="center">
+  <img src="https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilder/blob/master/preview/example3.jpg" width="400"/>
+</p>
+
 #
 - You can customize animation in recycler view with
 > Java
