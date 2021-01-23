@@ -45,15 +45,13 @@ dependencies {
 ---
 ## USE
 
-### Example In Java
+> Java
 ```java
 List<MyModel> list = new ArrayList<>();
 for (int i = 0; i < 10; i++) {
     list.add(new MyModel(i,"Data Ke "+ (i + 1)));
 }
 AdapterCreator<MyModel> adapter = new BuildAdapter<MyModel>(R.layout.rv_item)
-        .setCustomNoItem(R.layout.custom_empty_item)
-        .setAnimation(R.anim.anim_two)
         .setList(list)
         .onBind(new BindViewHolder() {
             @Override
@@ -87,7 +85,7 @@ new CountDownTimer(5000, 1000) {
 }.start();
 ```
 
-### Example In Kotlin
+> Kotlin
 ```java
 val list: MutableList<MyModel> = ArrayList()
 for (i in 0..9) {
@@ -95,8 +93,6 @@ for (i in 0..9) {
 }
 
 val adapter: AdapterCreator<MyModel> = BuildAdapter<MyModel>(R.layout.rv_item)
-        .setCustomNoItem(R.layout.custom_empty_item)
-        .setAnimation(R.anim.anim_two)
         .setList(list)
         .onBind { holder, position ->
             val b = RvItemBinding.bind(holder)
@@ -117,6 +113,8 @@ object : CountDownTimer(5000, 1000) {
     }
 }.start()
 ```
+
+|![]()||
 
 ---
 
