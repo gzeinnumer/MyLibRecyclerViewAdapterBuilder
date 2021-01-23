@@ -20,11 +20,13 @@ public class AdapterCreator<T> extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     private int emptyLayout = -1;
     private int animation = -1;
+    int rvItem;
 
     private BindViewHolder bindViewHolder;
 
-    public AdapterCreator() {
+    public AdapterCreator(int rvItem) {
         this.list = new ArrayList<>();
+        this.rvItem = rvItem;
     }
 
     public void setEmptyLayout(int emptyLayout) {
@@ -72,7 +74,7 @@ public class AdapterCreator<T> extends RecyclerView.Adapter<RecyclerView.ViewHol
         }
         if (list.size() > 0) {
             ViewStub stub = ((MyHolder) holder).itemView.findViewById(R.id.layout_stub);
-            stub.setLayoutResource(R.layout.child);
+            stub.setLayoutResource(rvItem);
             View inflated = stub.inflate();
             bindViewHolder.bind(inflated, position);
         }

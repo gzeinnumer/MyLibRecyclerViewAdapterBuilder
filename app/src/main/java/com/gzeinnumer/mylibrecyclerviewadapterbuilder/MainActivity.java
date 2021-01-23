@@ -1,7 +1,6 @@
 package com.gzeinnumer.mylibrecyclerviewadapterbuilder;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.os.Bundle;
@@ -10,7 +9,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.gzeinnumer.mylibrecyclerviewadapterbuilder.databinding.ActivityMainBinding;
-import com.gzeinnumer.mylibrecyclerviewadapterbuilder.databinding.ChildBinding;
+import com.gzeinnumer.mylibrecyclerviewadapterbuilder.databinding.RvItemBinding;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,14 +32,14 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < 10; i++) {
             list.add(new MyModel(i,"Data Ke "+ (i + 1)));
         }
-        AdapterCreator<MyModel> adapter = new BuildAdapter<MyModel>()
+        AdapterCreator<MyModel> adapter = new BuildAdapter<MyModel>(R.layout.rv_item)
                 .setCustomNoItem(R.layout.custom_empty_item)
                 .setAnimation(R.anim.anim_two)
                 .setList(list)
                 .onBind(new BindViewHolder() {
                     @Override
                     public void bind(View holder, int position) {
-                        ChildBinding b = ChildBinding.bind(holder);
+                        RvItemBinding b = RvItemBinding.bind(holder);
                         b.btn.setText(list.get(position).id+"_"+list.get(position).name);
                         b.btn.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -70,14 +69,14 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < 10; i++) {
             list.add(String.valueOf(i));
         }
-        AdapterCreator<String> adapter = new BuildAdapter<String>()
+        AdapterCreator<String> adapter = new BuildAdapter<String>(R.layout.rv_item)
                 .setCustomNoItem(R.layout.custom_empty_item)
                 .setAnimation(R.anim.anim_two)
                 .setList(list)
                 .onBind(new BindViewHolder() {
                     @Override
                     public void bind(View holder, int position) {
-                        ChildBinding b = ChildBinding.bind(holder);
+                        RvItemBinding b = RvItemBinding.bind(holder);
                         b.btn.setText(list.get(position));
                         b.btn.setOnClickListener(new View.OnClickListener() {
                             @Override
