@@ -33,8 +33,8 @@ public class MainActivity extends AppCompatActivity {
             list.add(new MyModel(i,"Data Ke "+ (i + 1)));
         }
         AdapterCreator<MyModel> adapter = new BuildAdapter<MyModel>(R.layout.rv_item)
-                .setCustomNoItem(R.layout.custom_empty_item)
-                .setAnimation(R.anim.anim_two)
+//                .setCustomNoItem(R.layout.custom_empty_item)
+//                .setAnimation(R.anim.anim_two)
                 .setList(list)
                 .onBind(new BindViewHolder() {
                     @Override
@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
                 for (int i = 0; i < 100; i++) {
                     list.add(new MyModel(i,"Data Ke "+ (i + 1)));
                 }
-                adapter.setList(list);
+//                adapter.setList(list);
             }
         }.start();
     }
