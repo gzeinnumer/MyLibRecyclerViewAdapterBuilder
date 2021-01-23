@@ -56,9 +56,9 @@ AdapterCreator<MyModel> adapter = new BuildAdapter<MyModel>(R.layout.rv_item)
         .onBind(new BindViewHolder() {
             @Override
             public void bind(View holder, int position) {
-                RvItemBinding b = RvItemBinding.bind(holder);
-                b.btn.setText(list.get(position).id+"_"+list.get(position).name);
-                b.btn.setOnClickListener(new View.OnClickListener() {
+                RvItemBinding bindingItem = RvItemBinding.bind(holder);
+                bindingItem.btn.setText(list.get(position).id+"_"+list.get(position).name);
+                bindingItem.btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Toast.makeText(MainActivity.this, "tekan " + position, Toast.LENGTH_SHORT).show();
@@ -92,12 +92,12 @@ for (i in 0..9) {
     list.add(MyModel(i, "Data Ke " + (i + 1)))
 }
 
-val adapter: AdapterCreator<MyModel> = BuildAdapter<MyModel>(R.layout.rv_item)
+val adapter = BuildAdapter<MyModel>(R.layout.rv_item)
         .setList(list)
         .onBind { holder, position ->
-            val b = RvItemBinding.bind(holder)
-            b.btn.text = list[position].id.toString() + "_" + list[position].name
-            b.btn.setOnClickListener { Toast.makeText(this@MainActivity, "tekan $position", Toast.LENGTH_SHORT).show() }
+            val bindingItem = RvItemBinding.bind(holder)
+            bindingItem.btn.text = list[position].id.toString() + "_" + list[position].name
+            bindingItem.btn.setOnClickListener { Toast.makeText(this@MainActivity, "tekan $position", Toast.LENGTH_SHORT).show() }
         }
 
 binding.rv.layoutManager = LinearLayoutManager(applicationContext)
