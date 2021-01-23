@@ -33,7 +33,25 @@ dependencies {
   ...
   implementation 'com.github.gzeinnumer:MyLibRecyclerViewAdapterBuilder:version'
 }
+
+// enable view binding
+android {
+
+    ...
+
+    //Android Studio Version Until 4
+    viewBinding {
+        enabled = true
+    }
+
+    //Android Studio Version 4 -> gradle version 6.1.1 -> android gradle plugin version 4.0.0
+    buildFeatures{
+        viewBinding = true
+    }
+}
 ```
+
+Read More For Viewbinding [Java](https://github.com/gzeinnumer/ViewBindingExample) & [Kotlin](https://github.com/gzeinnumer/ViewBindingExampleKT)
 
 ## Feature List
 - [x] [View No Item](#make-class-table)
