@@ -127,13 +127,13 @@ Full Code
 
 |<img src="https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilder/blob/master/preview/example1.jpg" width="300"/>|<img src="https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilder/blob/master/preview/example2.jpg" width="300"/>|
 |---|---|
-|If `list` size = 0| Your Custom Item View |
+|If `list size = 0` | Your Custom Item View |
 
 ---
 
 ## Customize
 
-- You can customize Empty item Message or `list` size = 0 with
+- You can customize Empty item Message or `list size = 0` with
 > Java
 ```java
 new BuildAdapter<MyModel>(R.layout.rv_item)
