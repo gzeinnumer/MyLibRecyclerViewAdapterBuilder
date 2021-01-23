@@ -56,7 +56,7 @@ Read More For Viewbinding [Java](https://github.com/gzeinnumer/ViewBindingExampl
 ## Feature List
 - [x] Diffutils
 - [x] Adapter Builder
-- [x] View No Item
+- [x] Empty List State
 - [x] Animation
 
 ## Tech stack and 3rd library
