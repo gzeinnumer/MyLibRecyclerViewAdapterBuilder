@@ -114,7 +114,9 @@ object : CountDownTimer(5000, 1000) {
 }.start()
 ```
 
-|![]()||
+|![](https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilder/blob/master/preview/example1.jpg)|![](https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilder/blob/master/preview/example2.jpg)|
+|---|---|
+|If `list` size = 0| Your Custom Item View |
 
 ---
 
