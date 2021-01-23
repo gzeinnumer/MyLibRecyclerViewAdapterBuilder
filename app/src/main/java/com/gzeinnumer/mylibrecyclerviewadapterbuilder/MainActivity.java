@@ -32,10 +32,11 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < 10; i++) {
             list.add(new MyModel(i,"Data Ke "+ (i + 1)));
         }
+//        AdapterCreator<MyModel> adapter = new BuildAdapter<MyModel>(-1)
         AdapterCreator<MyModel> adapter = new BuildAdapter<MyModel>(R.layout.rv_item)
                 .setCustomNoItem(R.layout.custom_empty_item)
                 .setAnimation(R.anim.anim_two)
-                .setList(list)
+//                .setList(list)
                 .onBind(new BindViewHolder() {
                     @Override
                     public void bind(View holder, int position) {
@@ -58,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             public void onFinish() {
-                for (int i = 0; i < 10; i++) {
+                for (int i = 0; i < 100; i++) {
                     list.add(new MyModel(i,"Data Ke "+ (i + 1)));
                 }
                 adapter.setList(list);
@@ -71,7 +72,8 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < 10; i++) {
             list.add(String.valueOf(i));
         }
-        AdapterCreator<String> adapter = new BuildAdapter<String>(R.layout.rv_item)
+        AdapterCreator<String> adapter = new BuildAdapter<String>(-1)
+//        AdapterCreator<String> adapter = new BuildAdapter<String>(R.layout.rv_item)
                 .setCustomNoItem(R.layout.custom_empty_item)
                 .setAnimation(R.anim.anim_two)
                 .setList(list)

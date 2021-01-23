@@ -6,8 +6,8 @@
     android:orientation="vertical">
 
     <ImageView
-        android:src="@mipmap/ic_launcher"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_signal_cellular_no_sim_24"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:text="No Data" />
 </LinearLayout>

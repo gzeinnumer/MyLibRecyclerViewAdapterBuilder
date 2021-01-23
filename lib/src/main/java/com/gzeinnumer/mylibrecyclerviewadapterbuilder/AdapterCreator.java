@@ -10,24 +10,25 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.gzeinnumer.mylibrecyclerviewadapterbuilder.databinding.ItemRvBinding;
+import com.gzeinnumer.mylibrecyclerviewadapterbuilder.databinding.DefaultItemRvBinding;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("ALL")
 public class AdapterCreator<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<T> list;
 
     private int emptyLayout = -1;
     private int animation = -1;
-    int rvItem;
+    private static int rvItemAdapter = -1;
 
     private BindViewHolder bindViewHolder;
 
     public AdapterCreator(int rvItem) {
         this.list = new ArrayList<>();
-        this.rvItem = rvItem;
+        rvItemAdapter = rvItem;
     }
 
     public void setEmptyLayout(int emptyLayout) {
@@ -41,17 +42,15 @@ public class AdapterCreator<T> extends RecyclerView.Adapter<RecyclerView.ViewHol
         this.bindViewHolder = bindViewHolder;
     }
 
-//    public void setList(List<T> list) {
-//        this.list = list;
-//        notifyDataSetChanged();
-//    }
-
+    private static final int TYPE_NO_ITEM_VIEW = 2;
     private static final int TYPE_NORMAL = 1;
     private static final int TYPE_EMPTY = 0;
 
     @Override
     public int getItemViewType(int position) {
-        if (list.size() == 0) {
+        if (rvItemAdapter == -1) {
+            return TYPE_NO_ITEM_VIEW;
+        } else if (list.size() == 0){
             return TYPE_EMPTY;
         } else {
             return TYPE_NORMAL;
@@ -63,8 +62,10 @@ public class AdapterCreator<T> extends RecyclerView.Adapter<RecyclerView.ViewHol
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if (viewType == TYPE_EMPTY) {
             return new ViewHolderEmpty(LayoutInflater.from(parent.getContext()).inflate(emptyLayout == -1 ? R.layout.default_empty_item : emptyLayout, parent, false));
+        } else if (viewType == TYPE_NO_ITEM_VIEW){
+            return new ViewHolderEmpty(LayoutInflater.from(parent.getContext()).inflate(R.layout.default_no_item_view, parent, false));
         } else {
-            return new MyHolder(ItemRvBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
+            return new MyHolder(DefaultItemRvBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
         }
     }
 
@@ -73,16 +74,20 @@ public class AdapterCreator<T> extends RecyclerView.Adapter<RecyclerView.ViewHol
         if (animation!=-1){
             holder.itemView.setAnimation(AnimationUtils.loadAnimation(holder.itemView.getContext(), animation));
         }
-        if (list.size() > 0) {
-            ViewStub stub = ((MyHolder) holder).itemView.findViewById(R.id.layout_stub);
-            stub.setLayoutResource(rvItem);
-            View inflated = stub.inflate();
-            bindViewHolder.bind(inflated, position);
+        if (list.size() > 0 && rvItemAdapter != -1) {
+            try{
+                ViewStub stub = ((MyHolder) holder).itemView.findViewById(R.id.layout_stub);
+                stub.setLayoutResource(rvItemAdapter);
+                View inflated = stub.inflate();
+                bindViewHolder.bind(inflated, position);
+            } catch (Exception e){
+                e.printStackTrace();
+            }
         }
     }
 
     public static class MyHolder extends RecyclerView.ViewHolder {
-        public MyHolder(@NonNull ItemRvBinding itemView) {
+        public MyHolder(@NonNull DefaultItemRvBinding itemView) {
             super(itemView.getRoot());
         }
     }
@@ -99,12 +104,20 @@ public class AdapterCreator<T> extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     public void setList(List<T> d){
-        MyDiffUtilsCallBack<T> diffUtilsCallBack = new MyDiffUtilsCallBack<T>(list, d);
-        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffUtilsCallBack);
+        if (this.list.size()==0){
+            MyDiffUtilsCallBack diffUtilsCallBack = new MyDiffUtilsCallBack(d, list);
+            DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffUtilsCallBack);
 
-        list.clear();
-        list.addAll(d);
-        diffResult.dispatchUpdatesTo(this);
+            list.addAll(d);
+            diffResult.dispatchUpdatesTo(this);
+        } else {
+            MyDiffUtilsCallBack<T> diffUtilsCallBack = new MyDiffUtilsCallBack<T>(list, d);
+            DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffUtilsCallBack);
+
+            list.clear();
+            list.addAll(d);
+            diffResult.dispatchUpdatesTo(this);
+        }
     }
 
 }

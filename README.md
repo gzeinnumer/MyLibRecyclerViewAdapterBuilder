@@ -36,26 +36,86 @@ dependencies {
 ```
 
 ## Feature List
-- [x] [Make Class Table](#make-class-table)
+- [x] [View No Item](#make-class-table)
+- [x] [Animation](#make-class-table)
 
 ## Tech stack and 3rd library
-- [SQLite](https://developer.android.com/training/data-storage/sqlite?hl=id)
+- [View Binding](https://developer.android.com/topic/libraries/view-binding?hl=id)
 
 ---
 ## USE
 
-### Check File Database Exists On Root
+### Example In Java
 ```java
-...
-public class DBInstance extends SQLiteBuilder {
-
-    ...
-
-    public boolean isDBExistOnRoot(Context context){
-        String DB_NAME = "MyLibSQLiteSimple.db";
-        return isDatabaseExistOnRoot(context, DB_NAME);
-    }
+List<MyModel> list = new ArrayList<>();
+for (int i = 0; i < 10; i++) {
+    list.add(new MyModel(i,"Data Ke "+ (i + 1)));
 }
+AdapterCreator<MyModel> adapter = new BuildAdapter<MyModel>(R.layout.rv_item)
+        .setCustomNoItem(R.layout.custom_empty_item)
+        .setAnimation(R.anim.anim_two)
+        .setList(list)
+        .onBind(new BindViewHolder() {
+            @Override
+            public void bind(View holder, int position) {
+                RvItemBinding b = RvItemBinding.bind(holder);
+                b.btn.setText(list.get(position).id+"_"+list.get(position).name);
+                b.btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(MainActivity.this, "tekan " + position, Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
+
+binding.rv.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+binding.rv.hasFixedSize();
+binding.rv.setAdapter(adapter);
+
+//after 5 second, new data will appear
+new CountDownTimer(5000, 1000) {
+    public void onTick(long millisUntilFinished) {
+    }
+
+    public void onFinish() {
+        for (int i = 0; i < 10; i++) {
+            list.add(new MyModel(i,"Data Ke "+ (i + 1)));
+        }
+        adapter.setList(list);
+    }
+}.start();
+```
+
+### Example In Kotlin
+```java
+val list: MutableList<MyModel> = ArrayList()
+for (i in 0..9) {
+    list.add(MyModel(i, "Data Ke " + (i + 1)))
+}
+
+val adapter: AdapterCreator<MyModel> = BuildAdapter<MyModel>(R.layout.rv_item)
+        .setCustomNoItem(R.layout.custom_empty_item)
+        .setAnimation(R.anim.anim_two)
+        .setList(list)
+        .onBind { holder, position ->
+            val b = RvItemBinding.bind(holder)
+            b.btn.text = list[position].id.toString() + "_" + list[position].name
+            b.btn.setOnClickListener { Toast.makeText(this@MainActivity, "tekan $position", Toast.LENGTH_SHORT).show() }
+        }
+
+binding.rv.layoutManager = LinearLayoutManager(applicationContext)
+binding.rv.hasFixedSize()
+binding.rv.adapter = adapter
+
+//after 5 second, new data will appear
+object : CountDownTimer(5000, 1000) {
+    override fun onTick(millisUntilFinished: Long) {}
+    override fun onFinish() {
+
+        adapter.setList(list)
+    }
+}.start()
 ```
 
 ---

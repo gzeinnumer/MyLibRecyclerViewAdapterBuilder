@@ -5,11 +5,9 @@ import java.util.List;
 public class BuildAdapter<T> {
     AdapterCreator<T> adapterCreator;
     List<T> list;
-    int rvItem;
 
     public BuildAdapter(int rvItem) {
-        this.rvItem = rvItem;
-        this.adapterCreator = new AdapterCreator<T>(this.rvItem);
+        this.adapterCreator = new AdapterCreator<T>(rvItem);
     }
 
     public BuildAdapter<T> setCustomNoItem(int emptyViewContent){
