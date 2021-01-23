@@ -129,6 +129,35 @@ Full Code
 
 ---
 
+## Customize
+
+You can customize Empty item Message or `list` size = 0 with
+> Java
+```java
+new BuildAdapter<MyModel>(R.layout.rv_item)
+    .setCustomNoItem(R.layout.custom_empty_item)
+```
+>Kotlin
+```kotlin
+BuildAdapter<MyModel>(R.layout.rv_item)
+    .setCustomNoItem(R.layout.custom_empty_item)
+```
+
+You can customize animation in recycler view with
+> Java
+```java
+new BuildAdapter<MyModel>(R.layout.rv_item)
+    .setAnimation(R.anim.anim_two)
+```
+>Kotlin
+```kotlin
+BuildAdapter<MyModel>(R.layout.rv_item)
+    .setAnimation(R.anim.anim_two)
+```
+here is animation that you can use [RecyclerViewAnimation](https://github.com/gzeinnumer/RecyclerViewAnimation)
+
+---
+
 Sample APP, just clone it [Java](https://github.com/gzeinnumer/MyLibSimpleSQLite) & [Kotlin](https://github.com/gzeinnumer/MyLibSimpleSQLitekt)
 
 ---
