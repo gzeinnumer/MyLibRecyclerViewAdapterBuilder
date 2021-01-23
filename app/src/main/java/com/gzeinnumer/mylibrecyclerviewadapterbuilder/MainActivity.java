@@ -1,12 +1,12 @@
 package com.gzeinnumer.mylibrecyclerviewadapterbuilder;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.gzeinnumer.mylibrecyclerviewadapterbuilder.databinding.ActivityMainBinding;
 import com.gzeinnumer.mylibrecyclerviewadapterbuilder.databinding.RvItemBinding;
@@ -33,9 +33,9 @@ public class MainActivity extends AppCompatActivity {
             list.add(new MyModel(i,"Data Ke "+ (i + 1)));
         }
         AdapterCreator<MyModel> adapter = new BuildAdapter<MyModel>(R.layout.rv_item)
-//                .setCustomNoItem(R.layout.custom_empty_item)
-//                .setAnimation(R.anim.anim_two)
-                .setList(list)
+                .setCustomNoItem(R.layout.custom_empty_item)
+                .setAnimation(R.anim.anim_two)
+//                .setList(list)
                 .onBind(new BindViewHolder() {
                     @Override
                     public void bind(View holder, int position) {
