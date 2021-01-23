@@ -161,7 +161,7 @@ here is animation that you can use [RecyclerViewAnimation](https://github.com/gz
 
 ---
 
-Sample APP, just clone it [Java](https://github.com/gzeinnumer/MyLibSimpleSQLite) & [Kotlin](https://github.com/gzeinnumer/MyLibSimpleSQLitekt)
+Sample APP, just clone it [Java](https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilderExample) & [Kotlin](https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilderExampleKT)
 
 ---
 
