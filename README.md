@@ -54,8 +54,10 @@ android {
 Read More For Viewbinding [Java](https://github.com/gzeinnumer/ViewBindingExample) & [Kotlin](https://github.com/gzeinnumer/ViewBindingExampleKT)
 
 ## Feature List
-- [x] [View No Item](#make-class-table)
-- [x] [Animation](#make-class-table)
+- [x] Diffutils
+- [x] Adapter Builder
+- [x] View No Item
+- [x] Animation
 
 ## Tech stack and 3rd library
 - [View Binding](https://developer.android.com/topic/libraries/view-binding?hl=id)
