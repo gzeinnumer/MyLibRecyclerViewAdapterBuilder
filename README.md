@@ -194,7 +194,9 @@ val adapter: AdapterCreator<MyModel> = AdapterBuilder<MyModel>(R.layout.rv_item)
     }
 ```
 here is sample code in `AdapterRv extends RecyclerView.Adapter<>` that you can use [RecyclerViewSearchMultiItem](https://github.com/gzeinnumer/RecyclerViewSearchMultiItem)
-
+<p align="center">
+  <img src="https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilder/blob/master/preview/example5.jpg" width="300"/>
+</p>
 ---
 Preview :
 
@@ -244,8 +246,6 @@ here is animation that you can use [RecyclerViewAnimation](https://github.com/gz
 
 #
 - Custom Divider
-
-if you use custom divider like this
 > Java
 ```java
 AdapterCreator<MyModel> adapter = new AdapterBuilder<MyModel>(R.layout.rv_item)
@@ -256,7 +256,10 @@ AdapterCreator<MyModel> adapter = new AdapterBuilder<MyModel>(R.layout.rv_item)
 val adapter: AdapterCreator<MyModel> = BuildAdapter<MyModel>(R.layout.rv_item)
     .setDivider(R.layout.custom_divider)
 ```
-
+Sample code [custom_divider.xml](https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilder/blob/master/app/src/main/res/layout/custom_divider.xml)
+<p align="center">
+  <img src="https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilder/blob/master/preview/example4.jpg" width="300"/>
+</p>
 ---
 
 Sample APP, just clone it [Java](https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilderExample) & [Kotlin](https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilderExampleKT)
