@@ -152,18 +152,15 @@ AdapterCreator<MyModel> adapter = new AdapterBuilder<MyModel>(R.layout.rv_item)
         @Override
         public List<MyModel> performFiltering(CharSequence constraint, List<MyModel> listFilter) {
             List<MyModel> fildteredList = new ArrayList<>();
-            if (constraint == null || constraint.length() == 0) {
-                Collections.sort(listFilter, new Comparator<MyModel>() {
-                    @Override
-                    public int compare(MyModel o1, MyModel o2) {
-                        return o1.getName().toLowerCase().compareTo(o2.getName().toLowerCase());
-                    }
-                });
-                fildteredList.addAll(listFilter);
-            } else {
+            if (constraint != null || constraint.length() != 0) {
                 String filterPattern = constraint.toString().toLowerCase().trim();
                 for (MyModel item : listFilter) {
+                    //filter by id
                     if (String.valueOf(item.getId()).toLowerCase().contains(filterPattern)) {
+                        fildteredList.add(item);
+                    }
+                    //filter by name
+                    if (item.getName().toLowerCase().contains(filterPattern)) {
                         fildteredList.add(item);
                     }
                 }
@@ -191,16 +188,15 @@ val adapter: AdapterCreator<MyModel> = AdapterBuilder<MyModel>(R.layout.rv_item)
     .onBind { ... }
     .onFilter { constraint, listFilter ->
         val fildteredList: MutableList<MyModel> = ArrayList()
-
-        if (constraint == null || constraint.isEmpty()) {
-            listFilter.sortWith(Comparator { o1, o2 ->
-                o1.name.toLowerCase().compareTo(o2.name.toLowerCase())
-            })
-            fildteredList.addAll(listFilter)
-        } else {
+        if (constraint != null || constraint.isNotEmpty()) {
             val filterPattern = constraint.toString().toLowerCase().trim { it <= ' ' }
             for (item in listFilter) {
+                //filter by id
                 if (item.id.toString().toLowerCase().contains(filterPattern)) {
+                    fildteredList.add(item)
+                }
+                //filter by name
+                if (item.name.toString().toLowerCase().contains(filterPattern)) {
                     fildteredList.add(item)
                 }
             }
