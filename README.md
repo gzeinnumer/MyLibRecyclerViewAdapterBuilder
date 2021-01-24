@@ -249,45 +249,13 @@ if you use custom divider like this
 > Java
 ```java
 AdapterCreator<MyModel> adapter = new AdapterBuilder<MyModel>(R.layout.rv_item)
-        ...
-        .onBind(new BindViewHolder<MyModel>() {
-            @Override
-                public void bind(View holder, MyModel data, int position) {
-                ..
-                if (position == list.size()-1){
-                    //hide divide
-                } else {
-                    //show divider
-                }
-            }
-        });
+    .setDivider(R.layout.custom_divider)
 ```
 >Kotlin
 ```kotlin
 val adapter: AdapterCreator<MyModel> = BuildAdapter<MyModel>(R.layout.rv_item)
-        ...
-        .onBind { holder, data,  position ->
-            ...
-            if (position == list.size-1){
-                //hide divide
-            } else {
-                //show divider
-            }
-        }
+    .setDivider(R.layout.custom_divider)
 ```
-
-you need disable diffutils with
-> Java
-```java
-new AdapterBuilder<MyModel>(R.layout.rv_item)
-    .enableDiffUtils(false) // default value true
-```
->Kotlin
-```kotlin
-AdapterBuilder<MyModel>(R.layout.rv_item)
-    .enableDiffUtils(false) // default value true
-```
-couse `DiffUtils` wont re-render your last item before add new list.
 
 ---
 
