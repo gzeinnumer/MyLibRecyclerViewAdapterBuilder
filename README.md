@@ -108,7 +108,7 @@ new CountDownTimer(5000, 1000) {
 ```
 
 > Kotlin
-```java
+```kotlin
 val list: MutableList<MyModel> = ArrayList()
 for (i in 0..9) {
     list.add(MyModel(i, "Data Ke " + (i + 1)))
