@@ -4,7 +4,6 @@ import java.util.List;
 
 public class BuildAdapter<T> {
     AdapterCreator<T> adapterCreator;
-    List<T> list;
 
     public BuildAdapter(int rvItem) {
         this.adapterCreator = new AdapterCreator<T>(rvItem);
@@ -13,6 +12,7 @@ public class BuildAdapter<T> {
     public BuildAdapter<T> setCustomNoItem(int emptyViewContent){
         adapterCreator.setEmptyLayout(emptyViewContent);
         return this;
+
     }
 
     public BuildAdapter<T> setAnimation(int animation){
@@ -21,7 +21,6 @@ public class BuildAdapter<T> {
     }
 
     public BuildAdapter<T> setList(List<T> list) {
-        this.list = list;
         adapterCreator.setList(list);
         return this;
     }

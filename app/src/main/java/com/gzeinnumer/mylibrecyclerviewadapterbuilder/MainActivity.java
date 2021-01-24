@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
                         });
                     }
                 });
+        binding.rv.addItemDecoration(new SimpleDividerItemDecoration(16));
         binding.rv.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         binding.rv.hasFixedSize();
         binding.rv.setAdapter(adapter);
@@ -58,8 +59,8 @@ public class MainActivity extends AppCompatActivity {
             }
 
             public void onFinish() {
-                for (int i = 0; i < 100; i++) {
-                    list.add(new MyModel(i,"Data Ke "+ (i + 1)));
+                for (int i = 10; i < 100; i++) {
+                    list.add(new MyModel(i, "Data Ke " + (i + 1)));
                 }
                 adapter.setList(list);
             }
