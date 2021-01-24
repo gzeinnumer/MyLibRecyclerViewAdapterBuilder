@@ -5,44 +5,71 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
 import android.view.animation.AnimationUtils;
+import android.widget.Filter;
+import android.widget.Filterable;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.gzeinnumer.mylibrecyclerviewadapterbuilder.databinding.DefaultItemRvBinding;
+import com.gzeinnumer.mylibrecyclerviewadapterbuilder.helper.BindViewHolder;
+import com.gzeinnumer.mylibrecyclerviewadapterbuilder.helper.FilterCallBack;
+import com.gzeinnumer.mylibrecyclerviewadapterbuilder.helper.MyDiffUtilsCallBack;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings("ALL")
-public class AdapterCreator<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class AdapterCreator<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements Filterable {
 
     public static final String TAG = "Adapter_Creator";
     private List<T> list;
+    private List<T> listFilter;
+    private List<T> listReal;
 
     private int emptyLayout = -1;
+    private int divider = -1;
     private int animation = -1;
     private static int rvItemAdapter = -1;
     private boolean diffutils = true;
-
-    private BindViewHolder bindViewHolder;
-
-    public AdapterCreator(int rvItem) {
-        this.list = new ArrayList<>();
-        rvItemAdapter = rvItem;
-    }
+    private BindViewHolder<T> bindViewHolder;
+    private FilterCallBack<T> filterCallBack;
 
     public void setEmptyLayout(int emptyLayout) {
         this.emptyLayout = emptyLayout;
     }
+    private Filter exampleFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            FilterResults results = new FilterResults();
+            if (constraint.length() > 0) {
+                List<T> data = filterCallBack.performFiltering(constraint, listFilter);
+                results.values = data;
+                return results;
+            } else {
+                results.values = listReal;
+                return results;
+            }
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            list.clear();
+            list.addAll((List) results.values);
+            notifyDataSetChanged();
+        }
+    };
 
     public void setAnimation(int animation) {
         this.animation = animation;
     }
 
-    public void setBindViewHolder(BindViewHolder bindViewHolder) {
-        this.bindViewHolder = bindViewHolder;
+    public AdapterCreator(int rvItem) {
+        this.list = new ArrayList<>();
+        this.listFilter = new ArrayList<>();
+        this.listReal = new ArrayList<>();
+        this.rvItemAdapter = rvItem;
     }
 
     private static final int TYPE_NO_ITEM_VIEW = 2;
@@ -60,6 +87,14 @@ public class AdapterCreator<T> extends RecyclerView.Adapter<RecyclerView.ViewHol
         }
     }
 
+    public void setDivider(int divider) {
+        this.divider = divider;
+    }
+
+    public void setBindViewHolder(BindViewHolder<T> bindViewHolder) {
+        this.bindViewHolder = bindViewHolder;
+    }
+
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -72,8 +107,17 @@ public class AdapterCreator<T> extends RecyclerView.Adapter<RecyclerView.ViewHol
             ViewStub stub = defaultItemRvBinding.layoutStub;
             stub.setLayoutResource(rvItemAdapter);
             View inflated = stub.inflate();
-            return new MyHolder(defaultItemRvBinding);
+            if (divider != -1) {
+                ViewStub stubDiv = defaultItemRvBinding.layoutDivider;
+                stubDiv.setLayoutResource(divider);
+                View inflatedDiv = stubDiv.inflate();
+            }
+            return new MyHolder<T>(defaultItemRvBinding);
         }
+    }
+
+    public void setEnableDiffUtils(boolean enable) {
+        this.diffutils = enable;
     }
 
     @Override
@@ -83,35 +127,9 @@ public class AdapterCreator<T> extends RecyclerView.Adapter<RecyclerView.ViewHol
         }
         if (holder.getItemViewType() == TYPE_NORMAL) {
             if (list.size() > 0 && rvItemAdapter != -1) {
-                ((MyHolder) holder).bind(position, bindViewHolder, list.size());
+                ((MyHolder<T>) holder).bind(list.get(position), bindViewHolder, list.size(), divider);
             }
         }
-    }
-
-    public void setList(List<T> d) {
-        if (diffutils) {
-            if (this.list.size() == 0) {
-                MyDiffUtilsCallBack diffUtilsCallBack = new MyDiffUtilsCallBack(d, list);
-                DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffUtilsCallBack);
-
-                list.addAll(d);
-                diffResult.dispatchUpdatesTo(this);
-            } else {
-                MyDiffUtilsCallBack<T> diffUtilsCallBack = new MyDiffUtilsCallBack<T>(list, d);
-                DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffUtilsCallBack);
-
-                list.clear();
-                list.addAll(d);
-                diffResult.dispatchUpdatesTo(this);
-            }
-        } else {
-            this.list = new ArrayList<>(d);
-            notifyDataSetChanged();
-        }
-    }
-
-    public void setEnableDiffUtils(boolean enable) {
-        this.diffutils = enable;
     }
 
     public static class ViewHolderEmpty extends RecyclerView.ViewHolder {
@@ -125,7 +143,47 @@ public class AdapterCreator<T> extends RecyclerView.Adapter<RecyclerView.ViewHol
         return list.size() > 0 ? list.size() : 1;
     }
 
-    public static class MyHolder extends RecyclerView.ViewHolder {
+    public void setList(List<T> d) {
+        if (diffutils) {
+            if (this.list.size() == 0) {
+                MyDiffUtilsCallBack<T> diffUtilsCallBack = new MyDiffUtilsCallBack<T>(d, list);
+                DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffUtilsCallBack);
+
+                list.addAll(d);
+                listFilter.addAll(d);
+                listReal.addAll(d);
+                diffResult.dispatchUpdatesTo(this);
+            } else {
+                MyDiffUtilsCallBack<T> diffUtilsCallBack = new MyDiffUtilsCallBack<T>(list, d);
+                DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffUtilsCallBack);
+
+                list.clear();
+                listFilter.clear();
+                listReal.clear();
+                list.addAll(d);
+                listFilter.addAll(d);
+                listReal.addAll(d);
+                diffResult.dispatchUpdatesTo(this);
+            }
+        } else {
+            this.list = new ArrayList<>(d);
+            this.listFilter = new ArrayList<>(d);
+            this.listReal = new ArrayList<>(d);
+            notifyDataSetChanged();
+        }
+    }
+
+    public AdapterCreator<T> onFilter(FilterCallBack<T> filterCallBack) {
+        this.filterCallBack = filterCallBack;
+        return this;
+    }
+
+    @Override
+    public Filter getFilter() {
+        return exampleFilter;
+    }
+
+    public static class MyHolder<T> extends RecyclerView.ViewHolder {
         DefaultItemRvBinding itemRvBinding;
         View view;
 
@@ -135,12 +193,15 @@ public class AdapterCreator<T> extends RecyclerView.Adapter<RecyclerView.ViewHol
             itemRvBinding = itemView;
         }
 
-        public void bind(int position, BindViewHolder bindViewHolder, int size) {
-            if (position == size - 1) {
-                itemRvBinding.layoutDivider.setVisibility(View.GONE);
+        public void bind(T data, BindViewHolder<T> bindViewHolder, int size, int divider) {
+            if (divider != -1) {
+                if (getAdapterPosition() == size - 1) {
+                    itemRvBinding.layoutDivider.setVisibility(View.GONE);
+                } else {
+                    itemRvBinding.layoutDivider.setVisibility(View.VISIBLE);
+                }
             }
-            bindViewHolder.bind(view, position);
+            bindViewHolder.bind(view, data, getAdapterPosition());
         }
     }
-
 }
