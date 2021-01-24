@@ -58,12 +58,14 @@ Read More For Viewbinding [Java](https://github.com/gzeinnumer/ViewBindingExampl
 - [x] Adapter Builder
 - [x] Empty List State
 - [x] Animation
+- [x] Filter Data / Search Item
 
 ## Tech stack and 3rd library
 - [View Binding](https://developer.android.com/topic/libraries/view-binding?hl=id)
 - [DiffUtil](https://developer.android.com/reference/androidx/recyclerview/widget/DiffUtil)
+- [Filterable](https://developer.android.com/reference/android/widget/Filerable)
 
----
+
 ## USE
 
 ### Make Builder
@@ -220,6 +222,7 @@ binding.ed.addTextChangedListener(object : TextWatcher {
 ```
 Here is sample code in `AdapterRv extends RecyclerView.Adapter<>` that you can use [RecyclerViewSearchMultiItem](https://github.com/gzeinnumer/RecyclerViewSearchMultiItem)
 and here is for simple TextWacher [MyLibSimpleTextWatcher](https://github.com/gzeinnumer/MyLibSimpleTextWatcher) that you can use
+
 Preview :
 
 <p align="center">
