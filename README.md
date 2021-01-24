@@ -66,6 +66,7 @@ Read More For Viewbinding [Java](https://github.com/gzeinnumer/ViewBindingExampl
 ---
 ## USE
 
+### Make Builder
 > Java
 ```java
 List<MyModel> list = new ArrayList<>();
@@ -137,6 +138,62 @@ object : CountDownTimer(5000, 1000) {
     }
 }.start()
 ```
+
+### Enable Filter
+
+Use `onFilter` after `onBind`.
+> Java
+```java
+AdapterCreator<MyModel> adapter = new AdapterBuilder<MyModel>(R.layout.rv_item)
+    .onBind( ... )
+    .onFilter(new FilterCallBack<MyModel>() {
+        @Override
+        public List<MyModel> performFiltering(CharSequence constraint, List<MyModel> listFilter) {
+            List<MyModel> fildteredList = new ArrayList<>();
+            if (constraint == null || constraint.length() == 0) {
+                Collections.sort(listFilter, new Comparator<MyModel>() {
+                    @Override
+                    public int compare(MyModel o1, MyModel o2) {
+                        return o1.getName().toLowerCase().compareTo(o2.getName().toLowerCase());
+                    }
+                });
+                fildteredList.addAll(listFilter);
+            } else {
+                String filterPattern = constraint.toString().toLowerCase().trim();
+                for (MyModel item : listFilter) {
+                    if (String.valueOf(item.getId()).toLowerCase().contains(filterPattern)) {
+                        fildteredList.add(item);
+                    }
+                }
+            }
+            return fildteredList;
+        }
+    });
+```
+> Kotlin
+```kotlin
+val adapter: AdapterCreator<MyModel> = AdapterBuilder<MyModel>(R.layout.rv_item)
+    .onBind { ... }
+    .onFilter { constraint, listFilter ->
+        val fildteredList: MutableList<MyModel> = ArrayList()
+
+        if (constraint == null || constraint.isEmpty()) {
+            listFilter.sortWith(Comparator { o1, o2 ->
+                o1.name.toLowerCase().compareTo(o2.name.toLowerCase())
+            })
+            fildteredList.addAll(listFilter)
+        } else {
+            val filterPattern = constraint.toString().toLowerCase().trim { it <= ' ' }
+            for (item in listFilter) {
+                if (item.id.toString().toLowerCase().contains(filterPattern)) {
+                    fildteredList.add(item)
+                }
+            }
+        }
+        fildteredList
+    }
+```
+here is sample code in `AdapterRv extends RecyclerView.Adapter<>` that you can use [RecyclerViewSearchMultiItem](https://github.com/gzeinnumer/RecyclerViewSearchMultiItem)
 
 ---
 Preview :
