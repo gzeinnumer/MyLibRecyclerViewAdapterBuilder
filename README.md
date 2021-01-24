@@ -56,8 +56,8 @@ Read More For Viewbinding [Java](https://github.com/gzeinnumer/ViewBindingExampl
 ## Feature List
 - [x] [Adapter Builder](#make-builder)
 - [x] [Filter Data / Search Item](#enable-filter)
-- [x] [Empty List State]()
-- [x] [Animation]()
+- [x] [Empty List State](#customize)
+- [x] [Animation](#customize)
 
 ## Tech stack and 3rd library
 - [View Binding](https://developer.android.com/topic/libraries/view-binding?hl=id)
