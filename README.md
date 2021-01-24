@@ -77,6 +77,7 @@ AdapterCreator<MyModel> adapter = new AdapterBuilder<MyModel>(R.layout.rv_item)
         .onBind(new BindViewHolder() {
             @Override
             public void bind(View holder, int position) {
+                //R.layout.rv_item -> RvItemBinding
                 RvItemBinding bindingItem = RvItemBinding.bind(holder);
                 bindingItem.btn.setText(list.get(position).id+"_"+list.get(position).name);
                 bindingItem.btn.setOnClickListener(new View.OnClickListener() {
@@ -98,7 +99,7 @@ new CountDownTimer(5000, 1000) {
     }
 
     public void onFinish() {
-        for (int i = 0; i < 100; i++) {
+        for (int i = 10; i < 100; i++) {
             list.add(new MyModel(i,"Data Ke "+ (i + 1)));
         }
         adapter.setList(list);
@@ -116,6 +117,7 @@ for (i in 0..9) {
 val adapter = AdapterBuilder<MyModel>(R.layout.rv_item)
         .setList(list)
         .onBind { holder, position ->
+            //R.layout.rv_item -> RvItemBinding
             val bindingItem = RvItemBinding.bind(holder)
             bindingItem.btn.text = list[position].id.toString() + "_" + list[position].name
             bindingItem.btn.setOnClickListener { Toast.makeText(this@MainActivity, "tekan $position", Toast.LENGTH_SHORT).show() }
@@ -129,7 +131,7 @@ binding.rv.adapter = adapter
 object : CountDownTimer(5000, 1000) {
     override fun onTick(millisUntilFinished: Long) {}
     override fun onFinish() {
-        for (i in 0..100) {
+        for (i in 10..100) {
             list.add(MyModel(i, "Data Ke " + (i + 1)))
         }
         adapter.setList(list)

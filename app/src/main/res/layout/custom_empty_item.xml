@@ -8,6 +8,5 @@
     <ImageView
         android:src="@drawable/ic_baseline_signal_cellular_no_sim_24"
         android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:text="No Data" />
+        android:layout_height="50dp" />
 </LinearLayout>
