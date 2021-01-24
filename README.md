@@ -178,7 +178,7 @@ AdapterCreator<MyModel> adapter = new AdapterBuilder<MyModel>(R.layout.rv_item)
         }
     });
 
-//use filter on TextWacher
+//use filter on TextWatcher
 binding.ed.addTextChangedListener(new TextWatcher() {
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -214,7 +214,7 @@ val adapter: AdapterCreator<MyModel> = AdapterBuilder<MyModel>(R.layout.rv_item)
         fildteredList
     }
 
-//use filter on TextWacher
+//use filter on TextWatcher
 binding.ed.addTextChangedListener(object : TextWatcher {
     override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
 
