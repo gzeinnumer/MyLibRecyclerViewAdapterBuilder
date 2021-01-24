@@ -1,9 +1,11 @@
 package com.gzeinnumer.mylibrecyclerviewadapterbuilder;
 
+import com.gzeinnumer.mylibrecyclerviewadapterbuilder.helper.BindViewHolder;
+
 import java.util.List;
 
 public class AdapterBuilder<T> {
-    AdapterCreator<T> adapterCreator;
+    private final AdapterCreator<T> adapterCreator;
 
     public AdapterBuilder(int rvItem) {
         this.adapterCreator = new AdapterCreator<T>(rvItem);
@@ -12,7 +14,12 @@ public class AdapterBuilder<T> {
     public AdapterBuilder<T> setCustomNoItem(int emptyViewContent) {
         adapterCreator.setEmptyLayout(emptyViewContent);
         return this;
+    }
 
+    public AdapterBuilder<T> setDivider(int divider) {
+        adapterCreator.setDivider(divider);
+        adapterCreator.setEnableDiffUtils(false);
+        return this;
     }
 
     public AdapterBuilder<T> setAnimation(int animation) {
@@ -25,12 +32,7 @@ public class AdapterBuilder<T> {
         return this;
     }
 
-    public AdapterBuilder<T> enableDiffUtils(boolean enable) {
-        adapterCreator.setEnableDiffUtils(enable);
-        return this;
-    }
-
-    public AdapterCreator<T> onBind(BindViewHolder bindViewHolder) {
+    public AdapterCreator<T> onBind(BindViewHolder<T> bindViewHolder) {
         adapterCreator.setBindViewHolder(bindViewHolder);
         return adapterCreator;
     }

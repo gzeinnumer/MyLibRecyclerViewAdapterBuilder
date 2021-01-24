@@ -7,7 +7,7 @@
 </h1>
 
 <p align="center">
-    <a><img src="https://img.shields.io/badge/Version-1.0.1-brightgreen.svg?style=flat"></a>
+    <a><img src="https://img.shields.io/badge/Version-1.2.0-brightgreen.svg?style=flat"></a>
     <a><img src="https://img.shields.io/badge/ID-gzeinnumer-blue.svg?style=flat"></a>
     <a><img src="https://img.shields.io/badge/Java-Suport-green?logo=java&style=flat"></a>
     <a><img src="https://img.shields.io/badge/Koltin-Suport-green?logo=kotlin&style=flat"></a>
@@ -66,6 +66,7 @@ Read More For Viewbinding [Java](https://github.com/gzeinnumer/ViewBindingExampl
 ---
 ## USE
 
+### Make Builder
 > Java
 ```java
 List<MyModel> list = new ArrayList<>();
@@ -74,12 +75,11 @@ for (int i = 0; i < 10; i++) {
 }
 AdapterCreator<MyModel> adapter = new AdapterBuilder<MyModel>(R.layout.rv_item)
         .setList(list)
-        .onBind(new BindViewHolder() {
+        .onBind(new BindViewHolder<MyModel>() {
             @Override
-            public void bind(View holder, int position) {
-                //R.layout.rv_item -> RvItemBinding
+            public void bind(View holder, MyModel data, int position) {
                 RvItemBinding bindingItem = RvItemBinding.bind(holder);
-                bindingItem.btn.setText(list.get(position).id+"_"+list.get(position).name);
+                bindingItem.btn.setText(data.getId() + "_" + data.getName());
                 bindingItem.btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -116,10 +116,10 @@ for (i in 0..9) {
 
 val adapter = AdapterBuilder<MyModel>(R.layout.rv_item)
         .setList(list)
-        .onBind { holder, position ->
-            //R.layout.rv_item -> RvItemBinding
+        .onBind { holder, data,  position ->
+            //rv_item = RvItemBinding
             val bindingItem = RvItemBinding.bind(holder)
-            bindingItem.btn.text = list[position].id.toString() + "_" + list[position].name
+            bindingItem.btn.text = data.id.toString() + "_" + data.name
             bindingItem.btn.setOnClickListener { Toast.makeText(this@MainActivity, "tekan $position", Toast.LENGTH_SHORT).show() }
         }
 
@@ -139,16 +139,103 @@ object : CountDownTimer(5000, 1000) {
 }.start()
 ```
 
+### Enable Filter
+
+Use `onFilter` after `onBind`.
+> Java
+```java
+AdapterCreator<MyModel> adapter = new AdapterBuilder<MyModel>(R.layout.rv_item)
+    .onBind( ... )
+    .onFilter(new FilterCallBack<MyModel>() {
+        @Override
+        public List<MyModel> performFiltering(CharSequence constraint, List<MyModel> listFilter) {
+            List<MyModel> fildteredList = new ArrayList<>();
+            if (constraint == null || constraint.length() == 0) {
+                Collections.sort(listFilter, new Comparator<MyModel>() {
+                    @Override
+                    public int compare(MyModel o1, MyModel o2) {
+                        return o1.getName().toLowerCase().compareTo(o2.getName().toLowerCase());
+                    }
+                });
+                fildteredList.addAll(listFilter);
+            } else {
+                String filterPattern = constraint.toString().toLowerCase().trim();
+                for (MyModel item : listFilter) {
+                    if (String.valueOf(item.getId()).toLowerCase().contains(filterPattern)) {
+                        fildteredList.add(item);
+                    }
+                }
+            }
+            return fildteredList;
+        }
+    });
+
+//use filter on TextWacher
+binding.ed.addTextChangedListener(new TextWatcher() {
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {}
+    @Override
+    public void afterTextChanged(Editable s) {
+        //call the filter
+        adapter.getFilter().filter(s);
+    }
+});
+```
+> Kotlin
+```kotlin
+val adapter: AdapterCreator<MyModel> = AdapterBuilder<MyModel>(R.layout.rv_item)
+    .onBind { ... }
+    .onFilter { constraint, listFilter ->
+        val fildteredList: MutableList<MyModel> = ArrayList()
+
+        if (constraint == null || constraint.isEmpty()) {
+            listFilter.sortWith(Comparator { o1, o2 ->
+                o1.name.toLowerCase().compareTo(o2.name.toLowerCase())
+            })
+            fildteredList.addAll(listFilter)
+        } else {
+            val filterPattern = constraint.toString().toLowerCase().trim { it <= ' ' }
+            for (item in listFilter) {
+                if (item.id.toString().toLowerCase().contains(filterPattern)) {
+                    fildteredList.add(item)
+                }
+            }
+        }
+        fildteredList
+    }
+
+//use filter on TextWacher
+binding.ed.addTextChangedListener(object : TextWatcher {
+    override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+
+    override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+
+    override fun afterTextChanged(s: Editable) {
+        //call the filter
+        adapter.filter.filter(s)
+    }
+})
+```
+Here is sample code in `AdapterRv extends RecyclerView.Adapter<>` that you can use [RecyclerViewSearchMultiItem](https://github.com/gzeinnumer/RecyclerViewSearchMultiItem)
+and here is for simple TextWacher [MyLibSimpleTextWatcher](https://github.com/gzeinnumer/MyLibSimpleTextWatcher) that you can use
+Preview :
+
+<p align="center">
+  <img src="https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilder/blob/dev-1/preview/example5.jpg" width="300"/>
+</p>
+
 ---
 Preview :
 
 Full Code
-[MainActivity.java](https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilder/blob/master/app/src/main/java/com/gzeinnumer/mylibrecyclerviewadapterbuilder/MainActivity.java)
- & [MyModel.java](https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilder/blob/master/app/src/main/java/com/gzeinnumer/mylibrecyclerviewadapterbuilder/MyModel.java)
- & [activity_main.xml](https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilder/blob/master/app/src/main/res/layout/activity_main.xml)
- & [rv_item.xml](https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilder/blob/master/app/src/main/res/layout/rv_item.xml)
+[MainActivity.java](https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilder/blob/dev-1/app/src/main/java/com/gzeinnumer/mylibrecyclerviewadapterbuilder/MainActivity.java)
+ & [MyModel.java](https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilder/blob/dev-1/app/src/main/java/com/gzeinnumer/mylibrecyclerviewadapterbuilder/MyModel.java)
+ & [activity_main.xml](https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilder/blob/dev-1/app/src/main/res/layout/activity_main.xml)
+ & [rv_item.xml](https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilder/blob/dev-1/app/src/main/res/layout/rv_item.xml)
 
-|<img src="https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilder/blob/master/preview/example1.jpg" width="300"/>|<img src="https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilder/blob/master/preview/example2.jpg" width="300"/>|
+|<img src="https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilder/blob/dev-1/preview/example1.jpg" width="300"/>|<img src="https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilder/blob/dev-1/preview/example2.jpg" width="300"/>|
 |---|---|
 |If `list size = 0` | Your Custom Item View |
 
@@ -167,9 +254,9 @@ new AdapterBuilder<MyModel>(R.layout.rv_item)
 AdapterBuilder<MyModel>(R.layout.rv_item)
     .setCustomNoItem(R.layout.custom_empty_item)
 ```
-Sample code [custom_empty_item.xml](https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilder/blob/master/app/src/main/res/layout/custom_empty_item.xml)
+Sample code [custom_empty_item.xml](https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilder/blob/dev-1/app/src/main/res/layout/custom_empty_item.xml)
 <p align="center">
-  <img src="https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilder/blob/master/preview/example3.jpg" width="300"/>
+  <img src="https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilder/blob/dev-1/preview/example3.jpg" width="300"/>
 </p>
 
 #
@@ -188,51 +275,20 @@ here is animation that you can use [RecyclerViewAnimation](https://github.com/gz
 
 #
 - Custom Divider
-
-if you use custom divider like this
 > Java
 ```java
 AdapterCreator<MyModel> adapter = new AdapterBuilder<MyModel>(R.layout.rv_item)
-        ...
-        .onBind(new BindViewHolder() {
-            @Override
-            public void bind(View holder, int position) {
-                ..
-                if (position == list.size()-1){
-                    //hide divide
-                } else {
-                    //show divider
-                }
-            }
-        });
+    .setDivider(R.layout.custom_divider)
 ```
 >Kotlin
 ```kotlin
 val adapter: AdapterCreator<MyModel> = BuildAdapter<MyModel>(R.layout.rv_item)
-        ...
-        .onBind { holder, position ->
-            ...
-            if (position == list.size-1){
-                //hide divide
-            } else {
-                //show divider
-            }
-        }
+    .setDivider(R.layout.custom_divider)
 ```
-
-you need disable diffutils with
-> Java
-```java
-new AdapterBuilder<MyModel>(R.layout.rv_item)
-    .enableDiffUtils(false) // default value true
-```
->Kotlin
-```kotlin
-AdapterBuilder<MyModel>(R.layout.rv_item)
-    .enableDiffUtils(false) // default value true
-```
-couse `DiffUtils` wont re-render your last item before add new list.
-
+Sample code [custom_divider.xml](https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilder/blob/dev-1/app/src/main/res/layout/custom_divider.xml)
+<p align="center">
+  <img src="https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilder/blob/dev-1/preview/example4.jpg" width="300"/>
+</p>
 ---
 
 Sample APP, just clone it [Java](https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilderExample) & [Kotlin](https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilderExampleKT)
@@ -242,6 +298,10 @@ Sample APP, just clone it [Java](https://github.com/gzeinnumer/MyLibRecyclerView
 ### Version
 - **1.0.1**
   - First Release
+- **1.1.0**
+  - Add Filter Function
+- **1.2.0**
+  - Bug Fixing
 
 ---
 
