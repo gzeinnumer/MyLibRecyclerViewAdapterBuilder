@@ -54,11 +54,10 @@ android {
 Read More For Viewbinding [Java](https://github.com/gzeinnumer/ViewBindingExample) & [Kotlin](https://github.com/gzeinnumer/ViewBindingExampleKT)
 
 ## Feature List
-- [x] Diffutil
-- [x] Adapter Builder
-- [x] Empty List State
-- [x] Animation
-- [x] Filter Data / Search Item
+- [x] [Adapter Builder](#make-builder)
+- [x] [Filter Data / Search Item](#enable-filter)
+- [x] [Empty List State]()
+- [x] [Animation]()
 
 ## Tech stack and 3rd library
 - [View Binding](https://developer.android.com/topic/libraries/view-binding?hl=id)
@@ -229,8 +228,6 @@ binding.ed.addTextChangedListener(object : TextWatcher {
 ```
 Here is sample code in `AdapterRv extends RecyclerView.Adapter<>` that you can use [RecyclerViewSearchMultiItem](https://github.com/gzeinnumer/RecyclerViewSearchMultiItem)
 and here is for simple TextWacher [MyLibSimpleTextWatcher](https://github.com/gzeinnumer/MyLibSimpleTextWatcher) that you can use
-
-Preview :
 
 <p align="center">
   <img src="https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilder/blob/master/preview/example5.jpg" width="300"/>
