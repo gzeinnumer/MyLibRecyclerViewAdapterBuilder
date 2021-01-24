@@ -197,7 +197,8 @@ val adapter: AdapterCreator<MyModel> = AdapterBuilder<MyModel>(R.layout.rv_item)
     .onBind { ... }
     .onFilter { constraint, listFilter ->
         val fildteredList: MutableList<MyModel> = ArrayList()
-        if (constraint != null || constraint.isNotEmpty()) {
+
+        if (constraint.isNotEmpty()) {
             val filterPattern = constraint.toString().toLowerCase().trim { it <= ' ' }
             for (item in listFilter) {
                 //filter by id
