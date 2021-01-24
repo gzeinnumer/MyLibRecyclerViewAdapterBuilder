@@ -54,11 +54,10 @@ android {
 Read More For Viewbinding [Java](https://github.com/gzeinnumer/ViewBindingExample) & [Kotlin](https://github.com/gzeinnumer/ViewBindingExampleKT)
 
 ## Feature List
-- [x] Diffutil
-- [x] Adapter Builder
-- [x] Empty List State
-- [x] Animation
-- [x] Filter Data / Search Item
+- [x] [Adapter Builder](#make-builder)
+- [x] [Filter Data / Search Item](#enable-filter)
+- [x] [Empty List State](#customize)
+- [x] [Animation](#customize)
 
 ## Tech stack and 3rd library
 - [View Binding](https://developer.android.com/topic/libraries/view-binding?hl=id)
@@ -71,10 +70,13 @@ Read More For Viewbinding [Java](https://github.com/gzeinnumer/ViewBindingExampl
 ### Make Builder
 > Java
 ```java
+//setup data
 List<MyModel> list = new ArrayList<>();
 for (int i = 0; i < 10; i++) {
     list.add(new MyModel(i,"Data Ke "+ (i + 1)));
 }
+
+//setup adapter
 AdapterCreator<MyModel> adapter = new AdapterBuilder<MyModel>(R.layout.rv_item)
         .setList(list)
         .onBind(new BindViewHolder<MyModel>() {
@@ -91,9 +93,10 @@ AdapterCreator<MyModel> adapter = new AdapterBuilder<MyModel>(R.layout.rv_item)
             }
         });
 
+//setup RecyclerView
+binding.rv.setAdapter(adapter);
 binding.rv.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 binding.rv.hasFixedSize();
-binding.rv.setAdapter(adapter);
 
 //after 5 second, new data will appear
 new CountDownTimer(5000, 1000) {
@@ -104,6 +107,7 @@ new CountDownTimer(5000, 1000) {
         for (int i = 10; i < 100; i++) {
             list.add(new MyModel(i,"Data Ke "+ (i + 1)));
         }
+        //add new list
         adapter.setList(list);
     }
 }.start();
@@ -111,11 +115,13 @@ new CountDownTimer(5000, 1000) {
 
 > Kotlin
 ```kotlin
+//setup data
 val list: MutableList<MyModel> = ArrayList()
 for (i in 0..9) {
     list.add(MyModel(i, "Data Ke " + (i + 1)))
 }
 
+//setup adapter
 val adapter = AdapterBuilder<MyModel>(R.layout.rv_item)
         .setList(list)
         .onBind { holder, data,  position ->
@@ -125,9 +131,10 @@ val adapter = AdapterBuilder<MyModel>(R.layout.rv_item)
             bindingItem.btn.setOnClickListener { Toast.makeText(this@MainActivity, "tekan $position", Toast.LENGTH_SHORT).show() }
         }
 
+//setup RecyclerView
+binding.rv.adapter = adapter
 binding.rv.layoutManager = LinearLayoutManager(applicationContext)
 binding.rv.hasFixedSize()
-binding.rv.adapter = adapter
 
 //after 5 second, new data will appear
 object : CountDownTimer(5000, 1000) {
@@ -136,11 +143,13 @@ object : CountDownTimer(5000, 1000) {
         for (i in 10..100) {
             list.add(MyModel(i, "Data Ke " + (i + 1)))
         }
+        //add new list
         adapter.setList(list)
     }
 }.start()
 ```
 
+---
 ### Enable Filter
 
 Use `onFilter` after `onBind`.
@@ -152,18 +161,15 @@ AdapterCreator<MyModel> adapter = new AdapterBuilder<MyModel>(R.layout.rv_item)
         @Override
         public List<MyModel> performFiltering(CharSequence constraint, List<MyModel> listFilter) {
             List<MyModel> fildteredList = new ArrayList<>();
-            if (constraint == null || constraint.length() == 0) {
-                Collections.sort(listFilter, new Comparator<MyModel>() {
-                    @Override
-                    public int compare(MyModel o1, MyModel o2) {
-                        return o1.getName().toLowerCase().compareTo(o2.getName().toLowerCase());
-                    }
-                });
-                fildteredList.addAll(listFilter);
-            } else {
+            if (constraint != null || constraint.length() != 0) {
                 String filterPattern = constraint.toString().toLowerCase().trim();
                 for (MyModel item : listFilter) {
+                    //filter by id
                     if (String.valueOf(item.getId()).toLowerCase().contains(filterPattern)) {
+                        fildteredList.add(item);
+                    }
+                    //filter by name
+                    if (item.getName().toLowerCase().contains(filterPattern)) {
                         fildteredList.add(item);
                     }
                 }
@@ -172,7 +178,7 @@ AdapterCreator<MyModel> adapter = new AdapterBuilder<MyModel>(R.layout.rv_item)
         }
     });
 
-//use filter on TextWacher
+//use filter on TextWatcher
 binding.ed.addTextChangedListener(new TextWatcher() {
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -192,15 +198,15 @@ val adapter: AdapterCreator<MyModel> = AdapterBuilder<MyModel>(R.layout.rv_item)
     .onFilter { constraint, listFilter ->
         val fildteredList: MutableList<MyModel> = ArrayList()
 
-        if (constraint == null || constraint.isEmpty()) {
-            listFilter.sortWith(Comparator { o1, o2 ->
-                o1.name.toLowerCase().compareTo(o2.name.toLowerCase())
-            })
-            fildteredList.addAll(listFilter)
-        } else {
+        if (constraint.isNotEmpty()) {
             val filterPattern = constraint.toString().toLowerCase().trim { it <= ' ' }
             for (item in listFilter) {
+                //filter by id
                 if (item.id.toString().toLowerCase().contains(filterPattern)) {
+                    fildteredList.add(item)
+                }
+                //filter by name
+                if (item.name.toString().toLowerCase().contains(filterPattern)) {
                     fildteredList.add(item)
                 }
             }
@@ -208,7 +214,7 @@ val adapter: AdapterCreator<MyModel> = AdapterBuilder<MyModel>(R.layout.rv_item)
         fildteredList
     }
 
-//use filter on TextWacher
+//use filter on TextWatcher
 binding.ed.addTextChangedListener(object : TextWatcher {
     override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
 
@@ -222,8 +228,6 @@ binding.ed.addTextChangedListener(object : TextWatcher {
 ```
 Here is sample code in `AdapterRv extends RecyclerView.Adapter<>` that you can use [RecyclerViewSearchMultiItem](https://github.com/gzeinnumer/RecyclerViewSearchMultiItem)
 and here is for simple TextWacher [MyLibSimpleTextWatcher](https://github.com/gzeinnumer/MyLibSimpleTextWatcher) that you can use
-
-Preview :
 
 <p align="center">
   <img src="https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilder/blob/master/preview/example5.jpg" width="300"/>
@@ -244,7 +248,7 @@ Full Code
 
 ---
 
-## Customize
+### Customize
 
 - You can customize Empty item Message or `list size = 0` with
 > Java
