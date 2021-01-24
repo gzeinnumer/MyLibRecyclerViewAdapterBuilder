@@ -150,6 +150,7 @@ object : CountDownTimer(5000, 1000) {
 }.start()
 ```
 
+---
 ### Enable Filter
 
 Use `onFilter` after `onBind`.
@@ -250,7 +251,7 @@ Full Code
 
 ---
 
-## Customize
+### Customize
 
 - You can customize Empty item Message or `list size = 0` with
 > Java
