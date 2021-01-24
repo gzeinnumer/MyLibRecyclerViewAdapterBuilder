@@ -195,18 +195,18 @@ val adapter: AdapterCreator<MyModel> = AdapterBuilder<MyModel>(R.layout.rv_item)
 ```
 here is sample code in `AdapterRv extends RecyclerView.Adapter<>` that you can use [RecyclerViewSearchMultiItem](https://github.com/gzeinnumer/RecyclerViewSearchMultiItem)
 <p align="center">
-  <img src="https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilder/blob/master/preview/example5.jpg" width="300"/>
+  <img src="https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilder/blob/dev-1/preview/example5.jpg" width="300"/>
 </p>
 ---
 Preview :
 
 Full Code
-[MainActivity.java](https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilder/blob/master/app/src/main/java/com/gzeinnumer/mylibrecyclerviewadapterbuilder/MainActivity.java)
- & [MyModel.java](https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilder/blob/master/app/src/main/java/com/gzeinnumer/mylibrecyclerviewadapterbuilder/MyModel.java)
- & [activity_main.xml](https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilder/blob/master/app/src/main/res/layout/activity_main.xml)
- & [rv_item.xml](https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilder/blob/master/app/src/main/res/layout/rv_item.xml)
+[MainActivity.java](https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilder/blob/dev-1/app/src/main/java/com/gzeinnumer/mylibrecyclerviewadapterbuilder/MainActivity.java)
+ & [MyModel.java](https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilder/blob/dev-1/app/src/main/java/com/gzeinnumer/mylibrecyclerviewadapterbuilder/MyModel.java)
+ & [activity_main.xml](https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilder/blob/dev-1/app/src/main/res/layout/activity_main.xml)
+ & [rv_item.xml](https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilder/blob/dev-1/app/src/main/res/layout/rv_item.xml)
 
-|<img src="https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilder/blob/master/preview/example1.jpg" width="300"/>|<img src="https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilder/blob/master/preview/example2.jpg" width="300"/>|
+|<img src="https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilder/blob/dev-1/preview/example1.jpg" width="300"/>|<img src="https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilder/blob/dev-1/preview/example2.jpg" width="300"/>|
 |---|---|
 |If `list size = 0` | Your Custom Item View |
 
@@ -225,9 +225,9 @@ new AdapterBuilder<MyModel>(R.layout.rv_item)
 AdapterBuilder<MyModel>(R.layout.rv_item)
     .setCustomNoItem(R.layout.custom_empty_item)
 ```
-Sample code [custom_empty_item.xml](https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilder/blob/master/app/src/main/res/layout/custom_empty_item.xml)
+Sample code [custom_empty_item.xml](https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilder/blob/dev-1/app/src/main/res/layout/custom_empty_item.xml)
 <p align="center">
-  <img src="https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilder/blob/master/preview/example3.jpg" width="300"/>
+  <img src="https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilder/blob/dev-1/preview/example3.jpg" width="300"/>
 </p>
 
 #
@@ -256,9 +256,9 @@ AdapterCreator<MyModel> adapter = new AdapterBuilder<MyModel>(R.layout.rv_item)
 val adapter: AdapterCreator<MyModel> = BuildAdapter<MyModel>(R.layout.rv_item)
     .setDivider(R.layout.custom_divider)
 ```
-Sample code [custom_divider.xml](https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilder/blob/master/app/src/main/res/layout/custom_divider.xml)
+Sample code [custom_divider.xml](https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilder/blob/dev-1/app/src/main/res/layout/custom_divider.xml)
 <p align="center">
-  <img src="https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilder/blob/master/preview/example4.jpg" width="300"/>
+  <img src="https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilder/blob/dev-1/preview/example4.jpg" width="300"/>
 </p>
 ---
 
