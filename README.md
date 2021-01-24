@@ -118,9 +118,9 @@ val adapter = AdapterBuilder<MyModel>(R.layout.rv_item)
         .setList(list)
         .onBind { holder, data,  position ->
             //rv_item = RvItemBinding
-            val b = RvItemBinding.bind(holder)
-            b.btn.text = data.id + "_" + data.name
-            b.btn.setOnClickListener { Toast.makeText(this@MainActivity, "tekan $position", Toast.LENGTH_SHORT).show() }
+            val bindingItem = RvItemBinding.bind(holder)
+            bindingItem.btn.text = data.id.toString() + "_" + data.name
+            bindingItem.btn.setOnClickListener { Toast.makeText(this@MainActivity, "tekan $position", Toast.LENGTH_SHORT).show() }
         }
 
 binding.rv.layoutManager = LinearLayoutManager(applicationContext)
