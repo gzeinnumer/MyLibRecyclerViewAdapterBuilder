@@ -74,7 +74,7 @@ for (int i = 0; i < 10; i++) {
 }
 AdapterCreator<MyModel> adapter = new AdapterBuilder<MyModel>(R.layout.rv_item)
         .setList(list)
-        .onBind(new BindViewHolder<MyHolder>() {
+        .onBind(new BindViewHolder<MyModel>() {
             @Override
             public void bind(View holder, MyModel data, int position) {
                 RvItemBinding bindingItem = RvItemBinding.bind(holder);
@@ -193,7 +193,7 @@ if you use custom divider like this
 ```java
 AdapterCreator<MyModel> adapter = new AdapterBuilder<MyModel>(R.layout.rv_item)
         ...
-        .onBind(new BindViewHolder<MyHolder>() {
+        .onBind(new BindViewHolder<MyModel>() {
             @Override
                 public void bind(View holder, MyModel data, int position) {
                 ..
