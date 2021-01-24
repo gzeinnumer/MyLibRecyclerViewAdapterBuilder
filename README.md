@@ -7,7 +7,7 @@
 </h1>
 
 <p align="center">
-    <a><img src="https://img.shields.io/badge/Version-1.0.1-brightgreen.svg?style=flat"></a>
+    <a><img src="https://img.shields.io/badge/Version-1.1.0-brightgreen.svg?style=flat"></a>
     <a><img src="https://img.shields.io/badge/ID-gzeinnumer-blue.svg?style=flat"></a>
     <a><img src="https://img.shields.io/badge/Java-Suport-green?logo=java&style=flat"></a>
     <a><img src="https://img.shields.io/badge/Koltin-Suport-green?logo=kotlin&style=flat"></a>
@@ -76,10 +76,9 @@ AdapterCreator<MyModel> adapter = new AdapterBuilder<MyModel>(R.layout.rv_item)
         .setList(list)
         .onBind(new BindViewHolder() {
             @Override
-            public void bind(View holder, int position) {
-                //R.layout.rv_item -> RvItemBinding
+            public void bind(View holder, MyModel data, int position) {
                 RvItemBinding bindingItem = RvItemBinding.bind(holder);
-                bindingItem.btn.setText(list.get(position).id+"_"+list.get(position).name);
+                bindingItem.btn.setText(data.getId() + "_" + data.getName());
                 bindingItem.btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -116,11 +115,11 @@ for (i in 0..9) {
 
 val adapter = AdapterBuilder<MyModel>(R.layout.rv_item)
         .setList(list)
-        .onBind { holder, position ->
-            //R.layout.rv_item -> RvItemBinding
-            val bindingItem = RvItemBinding.bind(holder)
-            bindingItem.btn.text = list[position].id.toString() + "_" + list[position].name
-            bindingItem.btn.setOnClickListener { Toast.makeText(this@MainActivity, "tekan $position", Toast.LENGTH_SHORT).show() }
+        .onBind { holder, data,  position ->
+            //rv_item = RvItemBinding
+            val b = RvItemBinding.bind(holder)
+            b.btn.text = data.id + "_" + data.name
+            b.btn.setOnClickListener { Toast.makeText(this@MainActivity, "tekan $position", Toast.LENGTH_SHORT).show() }
         }
 
 binding.rv.layoutManager = LinearLayoutManager(applicationContext)
@@ -196,7 +195,7 @@ AdapterCreator<MyModel> adapter = new AdapterBuilder<MyModel>(R.layout.rv_item)
         ...
         .onBind(new BindViewHolder() {
             @Override
-            public void bind(View holder, int position) {
+                public void bind(View holder, MyModel data, int position) {
                 ..
                 if (position == list.size()-1){
                     //hide divide
@@ -210,7 +209,7 @@ AdapterCreator<MyModel> adapter = new AdapterBuilder<MyModel>(R.layout.rv_item)
 ```kotlin
 val adapter: AdapterCreator<MyModel> = BuildAdapter<MyModel>(R.layout.rv_item)
         ...
-        .onBind { holder, position ->
+        .onBind { holder, data,  position ->
             ...
             if (position == list.size-1){
                 //hide divide
@@ -242,6 +241,8 @@ Sample APP, just clone it [Java](https://github.com/gzeinnumer/MyLibRecyclerView
 ### Version
 - **1.0.1**
   - First Release
+- **1.1.0**
+  - Add Filter Function
 
 ---
 

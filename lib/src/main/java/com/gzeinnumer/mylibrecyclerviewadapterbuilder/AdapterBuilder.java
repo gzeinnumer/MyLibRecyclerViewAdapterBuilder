@@ -1,5 +1,7 @@
 package com.gzeinnumer.mylibrecyclerviewadapterbuilder;
 
+import com.gzeinnumer.mylibrecyclerviewadapterbuilder.helper.BindViewHolder;
+
 import java.util.List;
 
 public class AdapterBuilder<T> {
@@ -12,7 +14,6 @@ public class AdapterBuilder<T> {
     public AdapterBuilder<T> setCustomNoItem(int emptyViewContent) {
         adapterCreator.setEmptyLayout(emptyViewContent);
         return this;
-
     }
 
     public AdapterBuilder<T> setAnimation(int animation) {
@@ -30,7 +31,7 @@ public class AdapterBuilder<T> {
         return this;
     }
 
-    public AdapterCreator<T> onBind(BindViewHolder bindViewHolder) {
+    public AdapterCreator<T> onBind(BindViewHolder<T> bindViewHolder) {
         adapterCreator.setBindViewHolder(bindViewHolder);
         return adapterCreator;
     }

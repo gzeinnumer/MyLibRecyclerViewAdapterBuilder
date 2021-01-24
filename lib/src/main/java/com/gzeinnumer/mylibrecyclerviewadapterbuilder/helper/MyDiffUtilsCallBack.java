@@ -1,4 +1,4 @@
-package com.gzeinnumer.mylibrecyclerviewadapterbuilder;
+package com.gzeinnumer.mylibrecyclerviewadapterbuilder.helper;
 
 import androidx.recyclerview.widget.DiffUtil;
 
