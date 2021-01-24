@@ -197,6 +197,7 @@ here is sample code in `AdapterRv extends RecyclerView.Adapter<>` that you can u
 <p align="center">
   <img src="https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilder/blob/dev-1/preview/example5.jpg" width="300"/>
 </p>
+
 ---
 Preview :
 
