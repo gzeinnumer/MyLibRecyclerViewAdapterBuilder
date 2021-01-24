@@ -289,6 +289,7 @@ Sample code [custom_divider.xml](https://github.com/gzeinnumer/MyLibRecyclerView
 <p align="center">
   <img src="https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilder/blob/master/preview/example4.jpg" width="300"/>
 </p>
+
 ---
 
 Sample APP, just clone it [Java](https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilderExample) & [Kotlin](https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilderExampleKT)
