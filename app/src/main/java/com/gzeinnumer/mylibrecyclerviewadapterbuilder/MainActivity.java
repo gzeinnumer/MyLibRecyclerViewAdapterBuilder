@@ -1,6 +1,7 @@
 package com.gzeinnumer.mylibrecyclerviewadapterbuilder;
 
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -38,9 +39,9 @@ public class MainActivity extends AppCompatActivity {
         }
         AdapterCreator<MyModel> adapter = new AdapterBuilder<MyModel>(R.layout.rv_item)
                 .setCustomNoItem(R.layout.custom_empty_item)
+                .setDivider(R.layout.custom_divider)
                 .setAnimation(R.anim.anim_two)
                 .setList(list)
-//                .enableDiffUtils(false)
                 .onBind(new BindViewHolder<MyModel>() {
                     @Override
                     public void bind(View holder, MyModel data, int position) {
@@ -81,17 +82,17 @@ public class MainActivity extends AppCompatActivity {
         binding.rv.hasFixedSize();
         binding.rv.setAdapter(adapter);
 
-//        new CountDownTimer(5000, 1000) {
-//            public void onTick(long millisUntilFinished) {
-//            }
-//
-//            public void onFinish() {
-//                for (int i = 10; i < 100; i++) {
-//                    list.add(new MyModel(i, "Data Ke " + (i + 1)));
-//                }
-//                adapter.setList(list);
-//            }
-//        }.start();
+        new CountDownTimer(5000, 1000) {
+            public void onTick(long millisUntilFinished) {
+            }
+
+            public void onFinish() {
+                for (int i = 10; i < 100; i++) {
+                    list.add(new MyModel(i, "Data Ke " + (i + 1)));
+                }
+                adapter.setList(list);
+            }
+        }.start();
 
         binding.ed.addTextChangedListener(new TextWatcher() {
             @Override

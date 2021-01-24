@@ -169,6 +169,19 @@ AdapterCreator<MyModel> adapter = new AdapterBuilder<MyModel>(R.layout.rv_item)
             return fildteredList;
         }
     });
+
+//use filter on TextWacher
+binding.ed.addTextChangedListener(new TextWatcher() {
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {}
+    @Override
+    public void afterTextChanged(Editable s) {
+        //call the filter
+        adapter.getFilter().filter(s);
+    }
+});
 ```
 > Kotlin
 ```kotlin
@@ -192,9 +205,21 @@ val adapter: AdapterCreator<MyModel> = AdapterBuilder<MyModel>(R.layout.rv_item)
         }
         fildteredList
     }
-```
-here is sample code in `AdapterRv extends RecyclerView.Adapter<>` that you can use [RecyclerViewSearchMultiItem](https://github.com/gzeinnumer/RecyclerViewSearchMultiItem)
 
+//use filter on TextWacher
+binding.ed.addTextChangedListener(object : TextWatcher {
+    override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+
+    override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+
+    override fun afterTextChanged(s: Editable) {
+        //call the filter
+        adapter.filter.filter(s)
+    }
+})
+```
+Here is sample code in `AdapterRv extends RecyclerView.Adapter<>` that you can use [RecyclerViewSearchMultiItem](https://github.com/gzeinnumer/RecyclerViewSearchMultiItem)
+and here is for simple TextWacher [MyLibSimpleTextWatcher](https://github.com/gzeinnumer/MyLibSimpleTextWatcher) that you can use
 Preview :
 
 <p align="center">
@@ -210,13 +235,9 @@ Full Code
  & [activity_main.xml](https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilder/blob/dev-1/app/src/main/res/layout/activity_main.xml)
  & [rv_item.xml](https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilder/blob/dev-1/app/src/main/res/layout/rv_item.xml)
 
-<p align="center">
-
 |<img src="https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilder/blob/dev-1/preview/example1.jpg" width="300"/>|<img src="https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilder/blob/dev-1/preview/example2.jpg" width="300"/>|
 |---|---|
 |If `list size = 0` | Your Custom Item View |
-
-</p>
 
 ---
 

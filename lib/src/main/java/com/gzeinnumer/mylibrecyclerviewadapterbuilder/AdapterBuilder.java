@@ -5,7 +5,7 @@ import com.gzeinnumer.mylibrecyclerviewadapterbuilder.helper.BindViewHolder;
 import java.util.List;
 
 public class AdapterBuilder<T> {
-    AdapterCreator<T> adapterCreator;
+    private final AdapterCreator<T> adapterCreator;
 
     public AdapterBuilder(int rvItem) {
         this.adapterCreator = new AdapterCreator<T>(rvItem);
@@ -16,6 +16,12 @@ public class AdapterBuilder<T> {
         return this;
     }
 
+    public AdapterBuilder<T> setDivider(int divider) {
+        adapterCreator.setDivider(divider);
+        adapterCreator.setEnableDiffUtils(false);
+        return this;
+    }
+
     public AdapterBuilder<T> setAnimation(int animation) {
         adapterCreator.setAnimation(animation);
         return this;
@@ -23,11 +29,6 @@ public class AdapterBuilder<T> {
 
     public AdapterBuilder<T> setList(List<T> list) {
         adapterCreator.setList(list);
-        return this;
-    }
-
-    public AdapterBuilder<T> enableDiffUtils(boolean enable) {
-        adapterCreator.setEnableDiffUtils(enable);
         return this;
     }
 

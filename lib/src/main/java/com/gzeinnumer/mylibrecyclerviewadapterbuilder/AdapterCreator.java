@@ -26,30 +26,31 @@ public class AdapterCreator<T> extends RecyclerView.Adapter<RecyclerView.ViewHol
     public static final String TAG = "Adapter_Creator";
     private List<T> list;
     private List<T> listFilter;
+    private List<T> listReal;
 
     private int emptyLayout = -1;
+    private int divider = -1;
     private int animation = -1;
     private static int rvItemAdapter = -1;
     private boolean diffutils = true;
-
     private BindViewHolder<T> bindViewHolder;
     private FilterCallBack<T> filterCallBack;
 
     public void setEmptyLayout(int emptyLayout) {
         this.emptyLayout = emptyLayout;
     }
-
-    public void setAnimation(int animation) {
-        this.animation = animation;
-    }
-
     private Filter exampleFilter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
-            List<T> data = filterCallBack.performFiltering(constraint, listFilter);
             FilterResults results = new FilterResults();
-            results.values = data;
-            return results;
+            if (constraint.length() > 0) {
+                List<T> data = filterCallBack.performFiltering(constraint, listFilter);
+                results.values = data;
+                return results;
+            } else {
+                results.values = listReal;
+                return results;
+            }
         }
 
         @Override
@@ -59,6 +60,17 @@ public class AdapterCreator<T> extends RecyclerView.Adapter<RecyclerView.ViewHol
             notifyDataSetChanged();
         }
     };
+
+    public void setAnimation(int animation) {
+        this.animation = animation;
+    }
+
+    public AdapterCreator(int rvItem) {
+        this.list = new ArrayList<>();
+        this.listFilter = new ArrayList<>();
+        this.listReal = new ArrayList<>();
+        this.rvItemAdapter = rvItem;
+    }
 
     private static final int TYPE_NO_ITEM_VIEW = 2;
     private static final int TYPE_NORMAL = 1;
@@ -75,10 +87,8 @@ public class AdapterCreator<T> extends RecyclerView.Adapter<RecyclerView.ViewHol
         }
     }
 
-    public AdapterCreator(int rvItem) {
-        this.list = new ArrayList<>();
-        this.listFilter = new ArrayList<>();
-        this.rvItemAdapter = rvItem;
+    public void setDivider(int divider) {
+        this.divider = divider;
     }
 
     public void setBindViewHolder(BindViewHolder<T> bindViewHolder) {
@@ -97,6 +107,11 @@ public class AdapterCreator<T> extends RecyclerView.Adapter<RecyclerView.ViewHol
             ViewStub stub = defaultItemRvBinding.layoutStub;
             stub.setLayoutResource(rvItemAdapter);
             View inflated = stub.inflate();
+            if (divider != -1) {
+                ViewStub stubDiv = defaultItemRvBinding.layoutDivider;
+                stubDiv.setLayoutResource(divider);
+                View inflatedDiv = stubDiv.inflate();
+            }
             return new MyHolder<T>(defaultItemRvBinding);
         }
     }
@@ -112,7 +127,7 @@ public class AdapterCreator<T> extends RecyclerView.Adapter<RecyclerView.ViewHol
         }
         if (holder.getItemViewType() == TYPE_NORMAL) {
             if (list.size() > 0 && rvItemAdapter != -1) {
-                ((MyHolder<T>) holder).bind(list.get(position), bindViewHolder, list.size());
+                ((MyHolder<T>) holder).bind(list.get(position), bindViewHolder, list.size(), divider);
             }
         }
     }
@@ -136,6 +151,7 @@ public class AdapterCreator<T> extends RecyclerView.Adapter<RecyclerView.ViewHol
 
                 list.addAll(d);
                 listFilter.addAll(d);
+                listReal.addAll(d);
                 diffResult.dispatchUpdatesTo(this);
             } else {
                 MyDiffUtilsCallBack<T> diffUtilsCallBack = new MyDiffUtilsCallBack<T>(list, d);
@@ -143,13 +159,16 @@ public class AdapterCreator<T> extends RecyclerView.Adapter<RecyclerView.ViewHol
 
                 list.clear();
                 listFilter.clear();
+                listReal.clear();
                 list.addAll(d);
                 listFilter.addAll(d);
+                listReal.addAll(d);
                 diffResult.dispatchUpdatesTo(this);
             }
         } else {
             this.list = new ArrayList<>(d);
             this.listFilter = new ArrayList<>(d);
+            this.listReal = new ArrayList<>(d);
             notifyDataSetChanged();
         }
     }
@@ -174,9 +193,13 @@ public class AdapterCreator<T> extends RecyclerView.Adapter<RecyclerView.ViewHol
             itemRvBinding = itemView;
         }
 
-        public void bind(T data, BindViewHolder<T> bindViewHolder, int size) {
-            if (getAdapterPosition() == size - 1) {
-                itemRvBinding.layoutDivider.setVisibility(View.GONE);
+        public void bind(T data, BindViewHolder<T> bindViewHolder, int size, int divider) {
+            if (divider != -1) {
+                if (getAdapterPosition() == size - 1) {
+                    itemRvBinding.layoutDivider.setVisibility(View.GONE);
+                } else {
+                    itemRvBinding.layoutDivider.setVisibility(View.VISIBLE);
+                }
             }
             bindViewHolder.bind(view, data, getAdapterPosition());
         }
