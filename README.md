@@ -71,10 +71,13 @@ Read More For Viewbinding [Java](https://github.com/gzeinnumer/ViewBindingExampl
 ### Make Builder
 > Java
 ```java
+//setup data
 List<MyModel> list = new ArrayList<>();
 for (int i = 0; i < 10; i++) {
     list.add(new MyModel(i,"Data Ke "+ (i + 1)));
 }
+
+//setup adapter
 AdapterCreator<MyModel> adapter = new AdapterBuilder<MyModel>(R.layout.rv_item)
         .setList(list)
         .onBind(new BindViewHolder<MyModel>() {
@@ -91,9 +94,10 @@ AdapterCreator<MyModel> adapter = new AdapterBuilder<MyModel>(R.layout.rv_item)
             }
         });
 
+//setup RecyclerView
+binding.rv.setAdapter(adapter);
 binding.rv.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 binding.rv.hasFixedSize();
-binding.rv.setAdapter(adapter);
 
 //after 5 second, new data will appear
 new CountDownTimer(5000, 1000) {
@@ -104,6 +108,7 @@ new CountDownTimer(5000, 1000) {
         for (int i = 10; i < 100; i++) {
             list.add(new MyModel(i,"Data Ke "+ (i + 1)));
         }
+        //add new list
         adapter.setList(list);
     }
 }.start();
@@ -111,11 +116,13 @@ new CountDownTimer(5000, 1000) {
 
 > Kotlin
 ```kotlin
+//setup data
 val list: MutableList<MyModel> = ArrayList()
 for (i in 0..9) {
     list.add(MyModel(i, "Data Ke " + (i + 1)))
 }
 
+//setup adapter
 val adapter = AdapterBuilder<MyModel>(R.layout.rv_item)
         .setList(list)
         .onBind { holder, data,  position ->
@@ -125,9 +132,10 @@ val adapter = AdapterBuilder<MyModel>(R.layout.rv_item)
             bindingItem.btn.setOnClickListener { Toast.makeText(this@MainActivity, "tekan $position", Toast.LENGTH_SHORT).show() }
         }
 
+//setup RecyclerView
+binding.rv.adapter = adapter
 binding.rv.layoutManager = LinearLayoutManager(applicationContext)
 binding.rv.hasFixedSize()
-binding.rv.adapter = adapter
 
 //after 5 second, new data will appear
 object : CountDownTimer(5000, 1000) {
@@ -136,6 +144,7 @@ object : CountDownTimer(5000, 1000) {
         for (i in 10..100) {
             list.add(MyModel(i, "Data Ke " + (i + 1)))
         }
+        //add new list
         adapter.setList(list)
     }
 }.start()

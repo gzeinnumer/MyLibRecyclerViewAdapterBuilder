@@ -16,8 +16,6 @@ import com.gzeinnumer.mylibrecyclerviewadapterbuilder.helper.BindViewHolder;
 import com.gzeinnumer.mylibrecyclerviewadapterbuilder.helper.FilterCallBack;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -59,15 +57,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public List<MyModel> performFiltering(CharSequence constraint, List<MyModel> listFilter) {
                         List<MyModel> fildteredList = new ArrayList<>();
-                        if (constraint == null || constraint.length() == 0) {
-                            Collections.sort(listFilter, new Comparator<MyModel>() {
-                                @Override
-                                public int compare(MyModel o1, MyModel o2) {
-                                    return o1.getName().toLowerCase().compareTo(o2.getName().toLowerCase());
-                                }
-                            });
-                            fildteredList.addAll(listFilter);
-                        } else {
+                        if (constraint != null || constraint.length() != 0) {
                             String filterPattern = constraint.toString().toLowerCase().trim();
                             for (MyModel item : listFilter) {
                                 if (String.valueOf(item.getId()).toLowerCase().contains(filterPattern)) {
