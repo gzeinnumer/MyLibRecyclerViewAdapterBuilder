@@ -25,6 +25,11 @@ public class AdapterBuilder<T> {
         return this;
     }
 
+    public AdapterBuilder<T> enableDiffUtils(boolean enable) {
+        adapterCreator.setEnableDiffUtils(enable);
+        return this;
+    }
+
     public AdapterCreator<T> onBind(BindViewHolder bindViewHolder) {
         adapterCreator.setBindViewHolder(bindViewHolder);
         return adapterCreator;

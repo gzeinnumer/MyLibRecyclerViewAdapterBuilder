@@ -186,6 +186,53 @@ AdapterBuilder<MyModel>(R.layout.rv_item)
 ```
 here is animation that you can use [RecyclerViewAnimation](https://github.com/gzeinnumer/RecyclerViewAnimation)
 
+#
+- Custom Divider
+
+if you use custom divider like this
+> Java
+```java
+AdapterCreator<MyModel> adapter = new AdapterBuilder<MyModel>(R.layout.rv_item)
+        ...
+        .onBind(new BindViewHolder() {
+            @Override
+            public void bind(View holder, int position) {
+                ..
+                if (position == list.size()-1){
+                    //hide divide
+                } else {
+                    //show divider
+                }
+            }
+        });
+```
+>Kotlin
+```kotlin
+val adapter: AdapterCreator<MyModel> = BuildAdapter<MyModel>(R.layout.rv_item)
+        ...
+        .onBind { holder, position ->
+            ...
+            if (position == list.size-1){
+                //hide divide
+            } else {
+                //show divider
+            }
+        }
+```
+
+you need disable diffutils with
+> Java
+```java
+new AdapterBuilder<MyModel>(R.layout.rv_item)
+    .enableDiffUtils(false) // default value true
+```
+>Kotlin
+```kotlin
+AdapterBuilder<MyModel>(R.layout.rv_item)
+    .enableDiffUtils(false) // default value true
+```
+couse `DiffUtils` wont re-render your last item before add new list.
+
 ---
 
 Sample APP, just clone it [Java](https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilderExample) & [Kotlin](https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilderExampleKT)

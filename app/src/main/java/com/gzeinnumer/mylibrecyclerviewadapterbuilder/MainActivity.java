@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
                 .setCustomNoItem(R.layout.custom_empty_item)
                 .setAnimation(R.anim.anim_two)
                 .setList(list)
+//                .enableDiffUtils(false)
                 .onBind(new BindViewHolder() {
                     @Override
                     public void bind(View holder, int position) {
@@ -47,6 +48,11 @@ public class MainActivity extends AppCompatActivity {
                                 Toast.makeText(MainActivity.this, "tekan " + position, Toast.LENGTH_SHORT).show();
                             }
                         });
+                        if (position == list.size() - 1) {
+                            //hide divide
+                        } else {
+                            //show divider
+                        }
                     }
                 });
         binding.rv.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
@@ -75,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
                 .setCustomNoItem(R.layout.custom_empty_item)
                 .setAnimation(R.anim.anim_two)
                 .setList(list)
+//                .enableDiffUtils(false)
                 .onBind(new BindViewHolder() {
                     @Override
                     public void bind(View holder, int position) {

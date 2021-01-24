@@ -24,6 +24,7 @@ public class AdapterCreator<T> extends RecyclerView.Adapter<RecyclerView.ViewHol
     private int emptyLayout = -1;
     private int animation = -1;
     private static int rvItemAdapter = -1;
+    private boolean diffutils = true;
 
     private BindViewHolder bindViewHolder;
 
@@ -88,20 +89,29 @@ public class AdapterCreator<T> extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     public void setList(List<T> d) {
-        if (this.list.size() == 0) {
-            MyDiffUtilsCallBack diffUtilsCallBack = new MyDiffUtilsCallBack(d, list);
-            DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffUtilsCallBack);
+        if (diffutils) {
+            if (this.list.size() == 0) {
+                MyDiffUtilsCallBack diffUtilsCallBack = new MyDiffUtilsCallBack(d, list);
+                DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffUtilsCallBack);
 
-            list.addAll(d);
-            diffResult.dispatchUpdatesTo(this);
+                list.addAll(d);
+                diffResult.dispatchUpdatesTo(this);
+            } else {
+                MyDiffUtilsCallBack<T> diffUtilsCallBack = new MyDiffUtilsCallBack<T>(list, d);
+                DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffUtilsCallBack);
+
+                list.clear();
+                list.addAll(d);
+                diffResult.dispatchUpdatesTo(this);
+            }
         } else {
-            MyDiffUtilsCallBack<T> diffUtilsCallBack = new MyDiffUtilsCallBack<T>(list, d);
-            DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffUtilsCallBack);
-
-            list.clear();
-            list.addAll(d);
-            diffResult.dispatchUpdatesTo(this);
+            this.list = new ArrayList<>(d);
+            notifyDataSetChanged();
         }
+    }
+
+    public void setEnableDiffUtils(boolean enable) {
+        this.diffutils = enable;
     }
 
     public static class ViewHolderEmpty extends RecyclerView.ViewHolder {
@@ -132,10 +142,5 @@ public class AdapterCreator<T> extends RecyclerView.Adapter<RecyclerView.ViewHol
             bindViewHolder.bind(view, position);
         }
     }
-
-//    public void setList(List<T> d) {
-//        this.list = new ArrayList<>(d);
-//        notifyDataSetChanged();
-//    }
 
 }
