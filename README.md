@@ -194,6 +194,9 @@ val adapter: AdapterCreator<MyModel> = AdapterBuilder<MyModel>(R.layout.rv_item)
     }
 ```
 here is sample code in `AdapterRv extends RecyclerView.Adapter<>` that you can use [RecyclerViewSearchMultiItem](https://github.com/gzeinnumer/RecyclerViewSearchMultiItem)
+
+Preview :
+
 <p align="center">
   <img src="https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilder/blob/dev-1/preview/example5.jpg" width="300"/>
 </p>
@@ -207,9 +210,13 @@ Full Code
  & [activity_main.xml](https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilder/blob/dev-1/app/src/main/res/layout/activity_main.xml)
  & [rv_item.xml](https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilder/blob/dev-1/app/src/main/res/layout/rv_item.xml)
 
+<p align="center">
+
 |<img src="https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilder/blob/dev-1/preview/example1.jpg" width="300"/>|<img src="https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilder/blob/dev-1/preview/example2.jpg" width="300"/>|
 |---|---|
 |If `list size = 0` | Your Custom Item View |
+
+</p>
 
 ---
 
