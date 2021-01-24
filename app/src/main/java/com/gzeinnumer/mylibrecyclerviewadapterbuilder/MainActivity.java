@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < 10; i++) {
             list.add(new MyModel(i,"Data Ke "+ (i + 1)));
         }
-        AdapterCreator<MyModel> adapter = new BuildAdapter<MyModel>(R.layout.rv_item)
+        AdapterCreator<MyModel> adapter = new AdapterBuilder<MyModel>(R.layout.rv_item)
                 .setCustomNoItem(R.layout.custom_empty_item)
                 .setAnimation(R.anim.anim_two)
                 .setList(list)
@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void bind(View holder, int position) {
                         RvItemBinding bindingItem = RvItemBinding.bind(holder);
-                        bindingItem.btn.setText(list.get(position).id+"_"+list.get(position).name);
+                        bindingItem.btn.setText(list.get(position).id + "_" + list.get(position).name);
                         bindingItem.btn.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -49,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
                         });
                     }
                 });
-        binding.rv.addItemDecoration(new SimpleDividerItemDecoration(16));
         binding.rv.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         binding.rv.hasFixedSize();
         binding.rv.setAdapter(adapter);
@@ -72,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < 10; i++) {
             list.add(String.valueOf(i));
         }
-        AdapterCreator<String> adapter = new BuildAdapter<String>(R.layout.rv_item)
+        AdapterCreator<String> adapter = new AdapterBuilder<String>(R.layout.rv_item)
                 .setCustomNoItem(R.layout.custom_empty_item)
                 .setAnimation(R.anim.anim_two)
                 .setList(list)

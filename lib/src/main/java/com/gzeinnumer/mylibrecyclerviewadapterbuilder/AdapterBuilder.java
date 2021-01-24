@@ -2,25 +2,25 @@ package com.gzeinnumer.mylibrecyclerviewadapterbuilder;
 
 import java.util.List;
 
-public class BuildAdapter<T> {
+public class AdapterBuilder<T> {
     AdapterCreator<T> adapterCreator;
 
-    public BuildAdapter(int rvItem) {
+    public AdapterBuilder(int rvItem) {
         this.adapterCreator = new AdapterCreator<T>(rvItem);
     }
 
-    public BuildAdapter<T> setCustomNoItem(int emptyViewContent){
+    public AdapterBuilder<T> setCustomNoItem(int emptyViewContent) {
         adapterCreator.setEmptyLayout(emptyViewContent);
         return this;
 
     }
 
-    public BuildAdapter<T> setAnimation(int animation){
+    public AdapterBuilder<T> setAnimation(int animation) {
         adapterCreator.setAnimation(animation);
         return this;
     }
 
-    public BuildAdapter<T> setList(List<T> list) {
+    public AdapterBuilder<T> setList(List<T> list) {
         adapterCreator.setList(list);
         return this;
     }

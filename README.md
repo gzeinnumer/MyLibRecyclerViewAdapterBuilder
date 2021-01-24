@@ -54,13 +54,14 @@ android {
 Read More For Viewbinding [Java](https://github.com/gzeinnumer/ViewBindingExample) & [Kotlin](https://github.com/gzeinnumer/ViewBindingExampleKT)
 
 ## Feature List
-- [x] Diffutils
+- [x] Diffutil
 - [x] Adapter Builder
 - [x] Empty List State
 - [x] Animation
 
 ## Tech stack and 3rd library
 - [View Binding](https://developer.android.com/topic/libraries/view-binding?hl=id)
+- [DiffUtil](https://developer.android.com/reference/androidx/recyclerview/widget/DiffUtil)
 
 ---
 ## USE
@@ -71,7 +72,7 @@ List<MyModel> list = new ArrayList<>();
 for (int i = 0; i < 10; i++) {
     list.add(new MyModel(i,"Data Ke "+ (i + 1)));
 }
-AdapterCreator<MyModel> adapter = new BuildAdapter<MyModel>(R.layout.rv_item)
+AdapterCreator<MyModel> adapter = new AdapterBuilder<MyModel>(R.layout.rv_item)
         .setList(list)
         .onBind(new BindViewHolder() {
             @Override
@@ -112,7 +113,7 @@ for (i in 0..9) {
     list.add(MyModel(i, "Data Ke " + (i + 1)))
 }
 
-val adapter = BuildAdapter<MyModel>(R.layout.rv_item)
+val adapter = AdapterBuilder<MyModel>(R.layout.rv_item)
         .setList(list)
         .onBind { holder, position ->
             val bindingItem = RvItemBinding.bind(holder)
@@ -156,12 +157,12 @@ Full Code
 - You can customize Empty item Message or `list size = 0` with
 > Java
 ```java
-new BuildAdapter<MyModel>(R.layout.rv_item)
+new AdapterBuilder<MyModel>(R.layout.rv_item)
     .setCustomNoItem(R.layout.custom_empty_item)
 ```
 >Kotlin
 ```kotlin
-BuildAdapter<MyModel>(R.layout.rv_item)
+AdapterBuilder<MyModel>(R.layout.rv_item)
     .setCustomNoItem(R.layout.custom_empty_item)
 ```
 Sample code [custom_empty_item.xml](https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilder/blob/master/app/src/main/res/layout/custom_empty_item.xml)
@@ -173,12 +174,12 @@ Sample code [custom_empty_item.xml](https://github.com/gzeinnumer/MyLibRecyclerV
 - You can customize animation in recycler view with
 > Java
 ```java
-new BuildAdapter<MyModel>(R.layout.rv_item)
+new AdapterBuilder<MyModel>(R.layout.rv_item)
     .setAnimation(R.anim.anim_two)
 ```
 >Kotlin
 ```kotlin
-BuildAdapter<MyModel>(R.layout.rv_item)
+AdapterBuilder<MyModel>(R.layout.rv_item)
     .setAnimation(R.anim.anim_two)
 ```
 here is animation that you can use [RecyclerViewAnimation](https://github.com/gzeinnumer/RecyclerViewAnimation)
