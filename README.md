@@ -155,7 +155,9 @@ object : CountDownTimer(5000, 1000) {
 To enable Multi ViewType you can change
 `AdapterCreator<MyModel> adapter = new AdapterBuilder<MyModel>(R.layout.rv_item)`
 to
-`AdapterCreatorMultiType<MyModel> adapter = new AdapterBuilderMultiType<MyModel>()` and change body of function `onBind`. You can use all function seems like `AdapterCreator`
+`AdapterCreatorMultiType<MyModel> adapter = new AdapterBuilderMultiType<MyModel>()` and change body of function `onBind`.
+
+**Note : You can use all function seems like `AdapterBuilder`. example `.setList()`, `.onFilter()`,`.setCustomNoItem()`,`.setAnimation()`, `.setDivider()`**
 > Java
 ```java
 ....
