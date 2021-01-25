@@ -83,6 +83,7 @@ AdapterCreator<MyModel> adapter = new AdapterBuilder<MyModel>(R.layout.rv_item)
     .onBind(new BindViewHolder<MyModel>() {
         @Override
         public void bind(View holder, MyModel data, int position) {
+            //R.layout.rv_item = RvItemBinding
             RvItemBinding bindingItem = RvItemBinding.bind(holder);
             bindingItem.btn.setText(data.getId() + "_" + data.getName());
             bindingItem.btn.setOnClickListener(new View.OnClickListener() {
@@ -126,7 +127,7 @@ for (i in 0..9) {
 val adapter = AdapterBuilder<MyModel>(R.layout.rv_item)
     .setList(list)
     .onBind { holder, data,  position ->
-        //rv_item = RvItemBinding
+        //R.layout.rv_item = RvItemBinding
         val bindingItem = RvItemBinding.bind(holder)
         bindingItem.btn.text = data.id.toString() + "_" + data.name
         bindingItem.btn.setOnClickListener { Toast.makeText(this@MainActivity, "tekan $position", Toast.LENGTH_SHORT).show() }
@@ -182,9 +183,11 @@ AdapterCreatorMultiType<MyModel> adapter = new AdapterBuilderMultiType<MyModel>(
         public void bind(View holder, MyModel data, int position, int viewType) {
             // use viewType to bind your view
             if (viewType == TYPE_GENAP) {
+                //R.layout.rv_item_genap = RvItemGenapBinding
                 RvItemGenapBinding bindingItem = RvItemGenapBinding.bind(holder);
                 bindingItem.btn.setText(data.getId() + "_" + data.getName()+"_Genap");
             } else if (viewType == TYPE_GANJIL){
+                //R.layout.rv_item = RvItemBinding
                 RvItemBinding bindingItem = RvItemBinding.bind(holder);
                 bindingItem.btn.setText(data.getId() + "_" + data.getName()+"_Ganjil");
             }
@@ -214,9 +217,11 @@ val adapter = AdapterBuilderMultiType<MyModel>()
 
         override fun bind(holder: View, data: MyModel, position: Int, viewType: Int) {
             if (viewType == TYPE_GENAP) {
+                //R.layout.rv_item_genap = RvItemGenapBinding
                 val bindingItem = RvItemGenapBinding.bind(holder)
                 bindingItem.btn.text = data.id.toString() + "_" + data.name + "_Genap"
             } else if (viewType == TYPE_GANJIL) {
+                //R.layout.rv_item = RvItemBinding
                 val bindingItem = RvItemBinding.bind(holder)
                 bindingItem.btn.text = data.id.toString() + "_" + data.name + "_Ganjil"
             }
