@@ -69,51 +69,7 @@ Read More For Viewbinding [Java](https://github.com/gzeinnumer/ViewBindingExampl
 ## USE
 
 ### Make Builder Single Type
-> Java
-```java
-//setup data
-List<MyModel> list = new ArrayList<>();
-for (int i = 0; i < 10; i++) {
-    list.add(new MyModel(i,"Data Ke "+ (i + 1)));
-}
-
-//setup adapter
-AdapterCreator<MyModel> adapter = new AdapterBuilder<MyModel>(R.layout.rv_item)
-    .setList(list)
-    .onBind(new BindViewHolder<MyModel>() {
-        @Override
-        public void bind(View holder, MyModel data, int position) {
-            //R.layout.rv_item = RvItemBinding
-            RvItemBinding bindingItem = RvItemBinding.bind(holder);
-            bindingItem.btn.setText(data.getId() + "_" + data.getName());
-            bindingItem.btn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(MainActivity.this, "tekan " + position, Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
-    });
-
-//setup RecyclerView
-binding.rv.setAdapter(adapter);
-binding.rv.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-binding.rv.hasFixedSize();
-
-//after 5 second, new data will appear
-new CountDownTimer(5000, 1000) {
-    public void onTick(long millisUntilFinished) {
-    }
-
-    public void onFinish() {
-        for (int i = 10; i < 100; i++) {
-            list.add(new MyModel(i,"Data Ke "+ (i + 1)));
-        }
-        //add new list
-        adapter.setList(list);
-    }
-}.start();
-```
+> Java [**See Code**](https://gist.github.com/gzeinnumer/2b51745431b47ea3516dc11c90e3ea2b)
 
 > Kotlin
 ```kotlin
@@ -159,43 +115,7 @@ to
 `AdapterCreatorMultiType<MyModel> adapter = new AdapterBuilderMultiType<MyModel>()` and change body of function `onBind`.
 
 **Note : You can use all function seems like `AdapterBuilder`. example `.setList()`, `.onFilter()`,`.setCustomNoItem()`,`.setAnimation()`, `.setDivider()`**
-> Java
-```java
-....
-
-AdapterCreatorMultiType<MyModel> adapter = new AdapterBuilderMultiType<MyModel>()
-    .setList(list)
-    .onBind(new BindViewHolderMultiType<MyModel>() {
-        //your constant type
-        private final int TYPE_GENAP = 1;
-        private final int TYPE_GANJIL = 0;
-
-        @Override
-        public TypeViewItem getItemViewType(int position) {
-            //use TypeViewItem to put your Type And Their own Layout
-            if (position % 2 == 0)
-                return new TypeViewItem(TYPE_GENAP, R.layout.rv_item_genap);
-            else
-                return new TypeViewItem(TYPE_GANJIL, R.layout.rv_item);
-        }
-
-        @Override
-        public void bind(View holder, MyModel data, int position, int viewType) {
-            // use viewType to bind your view
-            if (viewType == TYPE_GENAP) {
-                //R.layout.rv_item_genap = RvItemGenapBinding
-                RvItemGenapBinding bindingItem = RvItemGenapBinding.bind(holder);
-                bindingItem.btn.setText(data.getId() + "_" + data.getName()+"_Genap");
-            } else if (viewType == TYPE_GANJIL){
-                //R.layout.rv_item = RvItemBinding
-                RvItemBinding bindingItem = RvItemBinding.bind(holder);
-                bindingItem.btn.setText(data.getId() + "_" + data.getName()+"_Ganjil");
-            }
-        }
-    });
-
-...
-```
+> Java [**See Code**](https://gist.github.com/gzeinnumer/d3bd1121477d27ae24d37ab4dce5dd14)
 
 > Kotlin
 ```kotlin
@@ -235,44 +155,8 @@ val adapter = AdapterBuilderMultiType<MyModel>()
 ### Enable Filter
 
 Use `onFilter` after `onBind`.
-> Java
-```java
-AdapterCreator<MyModel> adapter = new AdapterBuilder<MyModel>(R.layout.rv_item)
-    .onBind( ... )
-    .onFilter(new FilterCallBack<MyModel>() {
-        @Override
-        public List<MyModel> performFiltering(CharSequence constraint, List<MyModel> listFilter) {
-            List<MyModel> fildteredList = new ArrayList<>();
-            if (constraint != null || constraint.length() != 0) {
-                String filterPattern = constraint.toString().toLowerCase().trim();
-                for (MyModel item : listFilter) {
-                    //filter by id
-                    if (String.valueOf(item.getId()).toLowerCase().contains(filterPattern)) {
-                        fildteredList.add(item);
-                    }
-                    //filter by name
-                    if (item.getName().toLowerCase().contains(filterPattern)) {
-                        fildteredList.add(item);
-                    }
-                }
-            }
-            return fildteredList;
-        }
-    });
+> Java [**See Code**](https://gist.github.com/gzeinnumer/2f76bbc57501b63b59f958ae7bff3923)
 
-//use filter on TextWatcher
-binding.ed.addTextChangedListener(new TextWatcher() {
-    @Override
-    public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-    @Override
-    public void onTextChanged(CharSequence s, int start, int before, int count) {}
-    @Override
-    public void afterTextChanged(Editable s) {
-        //call the filter
-        adapter.getFilter().filter(s);
-    }
-});
-```
 > Kotlin
 ```kotlin
 val adapter: AdapterCreator<MyModel> = AdapterBuilder<MyModel>(R.layout.rv_item)
