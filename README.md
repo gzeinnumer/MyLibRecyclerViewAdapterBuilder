@@ -198,29 +198,30 @@ AdapterCreatorMultiType<MyModel> adapter = new AdapterBuilderMultiType<MyModel>(
 ```kotlin
 ...
 
-AdapterCreatorMultiType<MyModel> adapter = new AdapterBuilderMultiType<MyModel>()
+val adapter = AdapterBuilderMultiType<MyModel>()
     .setList(list)
-    .onBind(new BindViewHolderMultiType<MyModel>() {
-        private final int TYPE_GENAP = 1;
-        private final int TYPE_GANJIL = 0;
+    .onBind(object : BindViewHolderMultiType<MyModel> {
 
-        @Override
-        public TypeViewItem getItemViewType(int position) {
-            if (position % 2 == 0) return new TypeViewItem(TYPE_GENAP, R.layout.rv_item_genap);
-            else return new TypeViewItem(TYPE_GANJIL, R.layout.rv_item);
+        private val TYPE_GENAP = 1
+        private val TYPE_GANJIL = 0
+
+        override fun getItemViewType(position: Int): TypeViewItem {
+            return if (position % 2 == 0)
+                TypeViewItem(TYPE_GENAP, R.layout.rv_item_genap)
+            else
+                TypeViewItem(TYPE_GANJIL, R.layout.rv_item)
         }
 
-        @Override
-        public void bind(View holder, MyModel data, int position, int viewType) {
+        override fun bind(holder: View, data: MyModel, position: Int, viewType: Int) {
             if (viewType == TYPE_GENAP) {
-                RvItemGenapBinding bindingItem = RvItemGenapBinding.bind(holder);
-                bindingItem.btn.setText(data.getId() + "_" + data.getName()+"_Genap");
-            } else if (viewType == TYPE_GANJIL){
-                RvItemBinding bindingItem = RvItemBinding.bind(holder);
-                bindingItem.btn.setText(data.getId() + "_" + data.getName()+"_Ganjil");
+                val bindingItem = RvItemGenapBinding.bind(holder)
+                bindingItem.btn.text = data.id.toString() + "_" + data.name + "_Genap"
+            } else if (viewType == TYPE_GANJIL) {
+                val bindingItem = RvItemBinding.bind(holder)
+                bindingItem.btn.text = data.id.toString() + "_" + data.name + "_Ganjil"
             }
         }
-    });
+    })
 
 ...
 ```
