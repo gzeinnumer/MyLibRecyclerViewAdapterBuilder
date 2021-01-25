@@ -7,7 +7,7 @@
 </h1>
 
 <p align="center">
-    <a><img src="https://img.shields.io/badge/Version-1.3.0-brightgreen.svg?style=flat"></a>
+    <a><img src="https://img.shields.io/badge/Version-1.3.1-brightgreen.svg?style=flat"></a>
     <a><img src="https://img.shields.io/badge/ID-gzeinnumer-blue.svg?style=flat"></a>
     <a><img src="https://img.shields.io/badge/Java-Suport-green?logo=java&style=flat"></a>
     <a><img src="https://img.shields.io/badge/Koltin-Suport-green?logo=kotlin&style=flat"></a>
@@ -149,13 +149,13 @@ object : CountDownTimer(5000, 1000) {
     }
 }.start()
 ```
-
+---
 ### Make Builder Multi Type
 
 To enable Multi ViewType you can change
 `AdapterCreator<MyModel> adapter = new AdapterBuilder<MyModel>(R.layout.rv_item)`
 to
-`AdapterCreatorMultiType<MyModel> adapter = new AdapterBuilderMultiType<MyModel>()` and change body of `onBind` function. You can use all function like `AdapterCreator`
+`AdapterCreatorMultiType<MyModel> adapter = new AdapterBuilderMultiType<MyModel>()` and change body of function `onBind`. You can use all function seems like `AdapterCreator`
 > Java
 ```java
 ....
@@ -384,7 +384,7 @@ Sample APP, just clone it [Java](https://github.com/gzeinnumer/MyLibRecyclerView
   - Add Filter Function
 - **1.2.0**
   - Bug Fixing
-- **1.3.0**
+- **1.3.1**
   - Add Multi Type
 
 ---
