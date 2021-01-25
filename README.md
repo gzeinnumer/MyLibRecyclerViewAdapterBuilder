@@ -7,7 +7,7 @@
 </h1>
 
 <p align="center">
-    <a><img src="https://img.shields.io/badge/Version-1.2.0-brightgreen.svg?style=flat"></a>
+    <a><img src="https://img.shields.io/badge/Version-1.3.0-brightgreen.svg?style=flat"></a>
     <a><img src="https://img.shields.io/badge/ID-gzeinnumer-blue.svg?style=flat"></a>
     <a><img src="https://img.shields.io/badge/Java-Suport-green?logo=java&style=flat"></a>
     <a><img src="https://img.shields.io/badge/Koltin-Suport-green?logo=kotlin&style=flat"></a>
@@ -54,7 +54,8 @@ android {
 Read More For Viewbinding [Java](https://github.com/gzeinnumer/ViewBindingExample) & [Kotlin](https://github.com/gzeinnumer/ViewBindingExampleKT)
 
 ## Feature List
-- [x] [Adapter Builder](#make-builder)
+- [x] [Adapter Builder Single Type](#make-builder-single-type)
+- [x] [Adapter Builder Multi Type](#make-builder-multi-type)
 - [x] [Filter Data / Search Item](#enable-filter)
 - [x] [Empty List State](#customize)
 - [x] [Animation](#customize)
@@ -64,10 +65,10 @@ Read More For Viewbinding [Java](https://github.com/gzeinnumer/ViewBindingExampl
 - [DiffUtil](https://developer.android.com/reference/androidx/recyclerview/widget/DiffUtil)
 - [Filterable](https://developer.android.com/reference/android/widget/Filerable)
 
-
+---
 ## USE
 
-### Make Builder
+### Make Builder Single Type
 > Java
 ```java
 //setup data
@@ -147,6 +148,79 @@ object : CountDownTimer(5000, 1000) {
         adapter.setList(list)
     }
 }.start()
+```
+
+### Make Builder Multi Type
+
+To enable Multi ViewType you can change
+`AdapterCreator<MyModel> adapter = new AdapterBuilder<MyModel>(R.layout.rv_item)`
+to
+`AdapterCreatorMultiType<MyModel> adapter = new AdapterBuilderMultiType<MyModel>()` and change body of `onBind` function. You can use all function like `AdapterCreator`
+> Java
+```java
+....
+
+AdapterCreatorMultiType<MyModel> adapter = new AdapterBuilderMultiType<MyModel>()
+    .setList(list)
+    .onBind(new BindViewHolderMultiType<MyModel>() {
+        //your constant type
+        private final int TYPE_GENAP = 1;
+        private final int TYPE_GANJIL = 0;
+
+        @Override
+        public TypeViewItem getItemViewType(int position) {
+            //use TypeViewItem to put your Type And Their own Layout
+            if (position % 2 == 0)
+                return new TypeViewItem(TYPE_GENAP, R.layout.rv_item_genap);
+            else
+                return new TypeViewItem(TYPE_GANJIL, R.layout.rv_item);
+        }
+
+        @Override
+        public void bind(View holder, MyModel data, int position, int viewType) {
+            // use viewType to bind your view
+            if (viewType == TYPE_GENAP) {
+                RvItemGenapBinding bindingItem = RvItemGenapBinding.bind(holder);
+                bindingItem.btn.setText(data.getId() + "_" + data.getName()+"_Genap");
+            } else if (viewType == TYPE_GANJIL){
+                RvItemBinding bindingItem = RvItemBinding.bind(holder);
+                bindingItem.btn.setText(data.getId() + "_" + data.getName()+"_Ganjil");
+            }
+        }
+    });
+
+...
+```
+
+> Kotlin
+```kotlin
+...
+
+AdapterCreatorMultiType<MyModel> adapter = new AdapterBuilderMultiType<MyModel>()
+    .setList(list)
+    .onBind(new BindViewHolderMultiType<MyModel>() {
+        private final int TYPE_GENAP = 1;
+        private final int TYPE_GANJIL = 0;
+
+        @Override
+        public TypeViewItem getItemViewType(int position) {
+            if (position % 2 == 0) return new TypeViewItem(TYPE_GENAP, R.layout.rv_item_genap);
+            else return new TypeViewItem(TYPE_GANJIL, R.layout.rv_item);
+        }
+
+        @Override
+        public void bind(View holder, MyModel data, int position, int viewType) {
+            if (viewType == TYPE_GENAP) {
+                RvItemGenapBinding bindingItem = RvItemGenapBinding.bind(holder);
+                bindingItem.btn.setText(data.getId() + "_" + data.getName()+"_Genap");
+            } else if (viewType == TYPE_GANJIL){
+                RvItemBinding bindingItem = RvItemBinding.bind(holder);
+                bindingItem.btn.setText(data.getId() + "_" + data.getName()+"_Ganjil");
+            }
+        }
+    });
+
+...
 ```
 
 ---
@@ -310,6 +384,8 @@ Sample APP, just clone it [Java](https://github.com/gzeinnumer/MyLibRecyclerView
   - Add Filter Function
 - **1.2.0**
   - Bug Fixing
+- **1.3.0**
+  - Add Multi Type
 
 ---
 
