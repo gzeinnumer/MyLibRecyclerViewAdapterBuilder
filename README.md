@@ -79,20 +79,20 @@ for (int i = 0; i < 10; i++) {
 
 //setup adapter
 AdapterCreator<MyModel> adapter = new AdapterBuilder<MyModel>(R.layout.rv_item)
-        .setList(list)
-        .onBind(new BindViewHolder<MyModel>() {
-            @Override
-            public void bind(View holder, MyModel data, int position) {
-                RvItemBinding bindingItem = RvItemBinding.bind(holder);
-                bindingItem.btn.setText(data.getId() + "_" + data.getName());
-                bindingItem.btn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Toast.makeText(MainActivity.this, "tekan " + position, Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-        });
+    .setList(list)
+    .onBind(new BindViewHolder<MyModel>() {
+        @Override
+        public void bind(View holder, MyModel data, int position) {
+            RvItemBinding bindingItem = RvItemBinding.bind(holder);
+            bindingItem.btn.setText(data.getId() + "_" + data.getName());
+            bindingItem.btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(MainActivity.this, "tekan " + position, Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+    });
 
 //setup RecyclerView
 binding.rv.setAdapter(adapter);
@@ -124,13 +124,13 @@ for (i in 0..9) {
 
 //setup adapter
 val adapter = AdapterBuilder<MyModel>(R.layout.rv_item)
-        .setList(list)
-        .onBind { holder, data,  position ->
-            //rv_item = RvItemBinding
-            val bindingItem = RvItemBinding.bind(holder)
-            bindingItem.btn.text = data.id.toString() + "_" + data.name
-            bindingItem.btn.setOnClickListener { Toast.makeText(this@MainActivity, "tekan $position", Toast.LENGTH_SHORT).show() }
-        }
+    .setList(list)
+    .onBind { holder, data,  position ->
+        //rv_item = RvItemBinding
+        val bindingItem = RvItemBinding.bind(holder)
+        bindingItem.btn.text = data.id.toString() + "_" + data.name
+        bindingItem.btn.setOnClickListener { Toast.makeText(this@MainActivity, "tekan $position", Toast.LENGTH_SHORT).show() }
+    }
 
 //setup RecyclerView
 binding.rv.adapter = adapter
