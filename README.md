@@ -69,7 +69,7 @@ Read More For Viewbinding [Java](https://github.com/gzeinnumer/ViewBindingExampl
 ## USE
 
 ### Make Builder Single Type
-> Java [See Code](https://gist.github.com/gzeinnumer/2b51745431b47ea3516dc11c90e3ea2b)
+> Java [**See Code**](https://gist.github.com/gzeinnumer/2b51745431b47ea3516dc11c90e3ea2b)
 
 > Kotlin
 ```kotlin
@@ -115,7 +115,7 @@ to
 `AdapterCreatorMultiType<MyModel> adapter = new AdapterBuilderMultiType<MyModel>()` and change body of function `onBind`.
 
 **Note : You can use all function seems like `AdapterBuilder`. example `.setList()`, `.onFilter()`,`.setCustomNoItem()`,`.setAnimation()`, `.setDivider()`**
-> Java [See Code](https://gist.github.com/gzeinnumer/d3bd1121477d27ae24d37ab4dce5dd14)
+> Java [**See Code**](https://gist.github.com/gzeinnumer/d3bd1121477d27ae24d37ab4dce5dd14)
 
 > Kotlin
 ```kotlin
@@ -155,7 +155,7 @@ val adapter = AdapterBuilderMultiType<MyModel>()
 ### Enable Filter
 
 Use `onFilter` after `onBind`.
-> Java [See Code](https://gist.github.com/gzeinnumer/2f76bbc57501b63b59f958ae7bff3923)
+> Java [**See Code**](https://gist.github.com/gzeinnumer/2f76bbc57501b63b59f958ae7bff3923)
 
 > Kotlin
 ```kotlin
