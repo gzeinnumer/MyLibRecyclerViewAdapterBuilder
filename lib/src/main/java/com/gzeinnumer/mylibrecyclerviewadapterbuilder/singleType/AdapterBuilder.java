@@ -1,4 +1,4 @@
-package com.gzeinnumer.mylibrecyclerviewadapterbuilder;
+package com.gzeinnumer.mylibrecyclerviewadapterbuilder.singleType;
 
 import com.gzeinnumer.mylibrecyclerviewadapterbuilder.helper.BindViewHolder;
 
