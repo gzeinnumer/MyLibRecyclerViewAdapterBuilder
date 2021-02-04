@@ -10,14 +10,24 @@
     <a><img src="https://img.shields.io/badge/Version-1.3.1-brightgreen.svg?style=flat"></a>
     <a><img src="https://img.shields.io/badge/ID-gzeinnumer-blue.svg?style=flat"></a>
     <a><img src="https://img.shields.io/badge/Java-Suport-green?logo=java&style=flat"></a>
-    <a><img src="https://img.shields.io/badge/Koltin-Suport-green?logo=kotlin&style=flat"></a>
+    <a><img src="https://img.shields.io/badge/Kotlin-Suport-green?logo=kotlin&style=flat"></a>
     <a href="https://github.com/gzeinnumer"><img src="https://img.shields.io/github/followers/gzeinnumer?label=follow&style=social"></a>
     <br>
     <p>Say Good Bye To <b>Adapter</b> .</p>
 </p>
 
 ---
-## Download
+# Content List
+* [Download](#download)
+* [Feature List](#feature-list)
+* [Tech stack and 3rd library](#tech-stack-and-3rd-library)
+* [Usage](#usage)
+* [Example Code/App](#example-codeapp)
+* [Version](#version)
+* [Contribution](#contribution)
+
+---
+# Download
 Add maven `jitpack.io` and `dependencies` in `build.gradle (Project)` :
 ```gradle
 // build.gradle project
@@ -53,20 +63,22 @@ android {
 
 Read More For Viewbinding [Java](https://github.com/gzeinnumer/ViewBindingExample) & [Kotlin](https://github.com/gzeinnumer/ViewBindingExampleKT)
 
-## Feature List
+---
+# Feature List
 - [x] [Adapter Builder Single Type](#make-builder-single-type)
 - [x] [Adapter Builder Multi Type](#make-builder-multi-type)
 - [x] [Filter Data / Search Item](#enable-filter)
 - [x] [Empty List State](#customize)
 - [x] [Animation](#customize)
 
-## Tech stack and 3rd library
+---
+# Tech stack and 3rd library
 - [View Binding](https://developer.android.com/topic/libraries/view-binding?hl=id)
 - [DiffUtil](https://developer.android.com/reference/androidx/recyclerview/widget/DiffUtil)
 - [Filterable](https://developer.android.com/reference/android/widget/Filerable)
 
 ---
-## USE
+# Usage
 
 ### Make Builder Single Type
 > Java [**See Code**](https://gist.github.com/gzeinnumer/2b51745431b47ea3516dc11c90e3ea2b)
@@ -106,7 +118,7 @@ object : CountDownTimer(5000, 1000) {
     }
 }.start()
 ```
----
+#
 ### Make Builder Multi Type
 
 To enable Multi ViewType you can change
@@ -151,7 +163,7 @@ val adapter = AdapterBuilderMultiType<MyModel>()
 ...
 ```
 
----
+#
 ### Enable Filter
 
 Use `onFilter` after `onBind`.
@@ -199,7 +211,7 @@ and here is for simple TextWacher [MyLibSimpleTextWatcher](https://github.com/gz
   <img src="https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilder/blob/master/preview/example5.jpg" width="300"/>
 </p>
 
----
+#
 Preview :
 
 Full Code
@@ -212,8 +224,7 @@ Full Code
 |---|---|
 |If `list size = 0` | Your Custom Item View |
 
----
-
+#
 ### Customize
 
 - You can customize Empty item Message or `list size = 0` with
@@ -268,8 +279,7 @@ Sample code [custom_divider.xml](https://github.com/gzeinnumer/MyLibRecyclerView
 Sample APP, just clone it [Java](https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilderExample) & [Kotlin](https://github.com/gzeinnumer/MyLibRecyclerViewAdapterBuilderExampleKT)
 
 ---
-
-### Version
+# Version
 - **1.0.1**
   - First Release
 - **1.1.0**
@@ -280,9 +290,8 @@ Sample APP, just clone it [Java](https://github.com/gzeinnumer/MyLibRecyclerView
   - Add Multi Type
 
 ---
-
-### Contribution
-You can sent your constibution to `branche` `open-pull`.
+# Contribution
+You can sent your constibution to `branch` `open-pull`.
 
 ---
 
